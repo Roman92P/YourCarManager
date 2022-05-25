@@ -3,12 +3,18 @@ package com.pashkov.ycm.ycm_api.YCM_API.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
+
 /**
  * @author - Roman Pashkov
  */
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class YcmCustomer extends YcmUser {
+@Entity
+@Table(name = "ycmcustomer")
+public class YcmCustomer extends YcmUser implements Serializable {
 
     private String name;
     private String lastName;
