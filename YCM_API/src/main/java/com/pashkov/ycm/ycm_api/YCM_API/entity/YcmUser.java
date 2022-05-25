@@ -2,19 +2,21 @@ package com.pashkov.ycm.ycm_api.YCM_API.entity;
 
 import lombok.Data;
 
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /**
  * @author - Roman Pashkov
  */
 @Data
-public class User {
-
+@Entity
+@Table(name = "ycmuser")
+public class YcmUser {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nick;
-    private boolean enabled;
     private String email;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Address address;
     private Role role;
 
@@ -23,9 +25,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", nick='" + nick + '\'' +
-                ", enabled=" + enabled +
                 ", email='" + email + '\'' +
-                ", address=" + address +
                 '}';
     }
 }

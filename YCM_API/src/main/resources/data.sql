@@ -1,0 +1,2 @@
+INSERT INTO Car (id, manufacturer, model, vin, production_year) VALUES (1, 'OPEL', 'ASTRA','VSX9AERLVD9DH4178','2016');
+INSERT INTO YCMUSER (id, nick,email, role) VALUES (1, 'Roman','rp@gmail.com', 1);

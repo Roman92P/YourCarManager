@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class YcmCustomer extends User {
+public class YcmCustomer extends YcmUser {
 
     private String name;
     private String lastName;
