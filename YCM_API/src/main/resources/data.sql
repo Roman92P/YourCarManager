@@ -7,5 +7,5 @@ INSERT INTO YCMCUSTOMER (id, nick, email, role, name, last_name) VALUES (2, 'Rom
 INSERT INTO ADDRESS (id, town, post_code, street, build_number, apartment,country) VALUES (2,'Santa Barbara','00-002','East route','1','4',2);
 UPDATE YCMCUSTOMER SET ADDRESS_ID = 2 WHERE id = 2;
 INSERT INTO YCMSHOP (id, nick, email, role, address_id, shop_name) VALUES (3,'shopOne','rp@gmail.com',3,2,'ONE SHOP');
-
-
+INSERT INTO YCM_SERVICE (id, service_price, service_type, currency, timing_hours, service_description) VALUES (1,'500',9,1,'0.5','Change motor oil with oil filter');
+INSERT INTO SHOP_SERVICES (ycm_shop_id, service_id) VALUES (3,1);

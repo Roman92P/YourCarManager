@@ -2,7 +2,7 @@ package com.pashkov.ycm.ycm_api.YCM_API.entity;
 /**
  * @author - Roman Pashkov
  */
-public enum Country {
+public enum CountryEnum {
     UKRAINE,
     USA
 }

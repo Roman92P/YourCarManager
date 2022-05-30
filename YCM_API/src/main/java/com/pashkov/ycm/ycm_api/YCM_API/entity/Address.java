@@ -22,7 +22,7 @@ public class Address {
     private String street;
     private String buildNumber;
     private String apartment;
-    private Country country;
+    private CountryEnum country;
 
     @Override
     public String toString() {

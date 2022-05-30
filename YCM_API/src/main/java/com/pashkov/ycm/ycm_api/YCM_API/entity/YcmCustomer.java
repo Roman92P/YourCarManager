@@ -3,8 +3,7 @@ package com.pashkov.ycm.ycm_api.YCM_API.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**

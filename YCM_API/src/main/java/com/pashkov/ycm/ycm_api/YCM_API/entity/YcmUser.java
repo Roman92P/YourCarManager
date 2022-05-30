@@ -9,13 +9,15 @@ import java.io.Serializable;
  * @author - Roman Pashkov
  */
 @Data
-@Entity
+//@Entity
 @Table(name = "ycmuser")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
 public abstract class YcmUser implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(unique = true)
     private String nick;
     private String email;
     @OneToOne(fetch = FetchType.LAZY)
