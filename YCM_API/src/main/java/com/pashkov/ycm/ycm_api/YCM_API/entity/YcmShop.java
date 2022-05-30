@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * @author - Roman Pashkov
@@ -17,7 +18,7 @@ import java.io.Serializable;
 public class YcmShop extends YcmUser implements Serializable {
 
     private String shopName;
-    //private Set<String> services;
+    private Set<String> services;
 
     @Override
     public String toString() {
