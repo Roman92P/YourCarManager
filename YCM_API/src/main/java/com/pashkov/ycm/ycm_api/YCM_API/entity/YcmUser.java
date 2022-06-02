@@ -15,7 +15,7 @@ import java.io.Serializable;
 @MappedSuperclass
 public abstract class YcmUser implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(unique = true)
     private String nick;

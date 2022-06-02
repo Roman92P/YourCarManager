@@ -15,6 +15,9 @@ import java.io.Serializable;
 @Table(name = "ycmcustomer")
 public class YcmCustomer extends YcmUser implements Serializable {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private int id;
     private String name;
     private String lastName;
 

@@ -17,6 +17,9 @@ import java.util.Set;
 @Table(name = "ycmshop")
 public class YcmShop extends YcmUser implements Serializable {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private int id;
     private String shopName;
     @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "Shop_Services",
