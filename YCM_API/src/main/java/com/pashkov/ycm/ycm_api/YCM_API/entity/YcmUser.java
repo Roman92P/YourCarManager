@@ -22,6 +22,7 @@ public abstract class YcmUser implements Serializable {
     private String email;
     @OneToOne(fetch = FetchType.LAZY)
     private Address address;
+
     private Role role;
 
     @Override
