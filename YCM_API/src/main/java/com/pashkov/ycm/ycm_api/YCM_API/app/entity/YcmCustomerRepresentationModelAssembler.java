@@ -1,6 +1,6 @@
-package com.pashkov.ycm.ycm_api.YCM_API.entity;
+package com.pashkov.ycm.ycm_api.YCM_API.app.entity;
 
-import com.pashkov.ycm.ycm_api.YCM_API.resource.YcmUserCustomerResource;
+import com.pashkov.ycm.ycm_api.YCM_API.app.resource.YcmUserCustomerResource;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +21,8 @@ public class YcmCustomerRepresentationModelAssembler extends RepresentationModel
         ycmCustomerModel.setName(entity.getName());
         ycmCustomerModel.setLastName(entity.getLastName());
         ycmCustomerModel.setEmail(entity.getEmail());
+        Address address = entity.getAddress();
+        ycmCustomerModel.setAddress(address.getTown()+" "+address.getStreet());
         return ycmCustomerModel;
     }
 }

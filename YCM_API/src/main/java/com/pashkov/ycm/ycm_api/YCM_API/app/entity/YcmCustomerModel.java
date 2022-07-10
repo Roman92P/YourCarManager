@@ -1,4 +1,4 @@
-package com.pashkov.ycm.ycm_api.YCM_API.entity;
+package com.pashkov.ycm.ycm_api.YCM_API.app.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,9 +21,6 @@ import static com.fasterxml.jackson.annotation.JsonInclude.*;
 @JsonInclude(Include.NON_NULL)
 public class YcmCustomerModel extends RepresentationModel<YcmCustomerModel> {
 
-//    @JsonProperty("id")
-//    private Long id;
-
     @JsonProperty("name")
     private String name;
 
@@ -36,8 +33,8 @@ public class YcmCustomerModel extends RepresentationModel<YcmCustomerModel> {
     @JsonProperty("email")
     private String email;
 
-//    @JsonProperty("address")
-//    private AddressModel address;
+    @JsonProperty("address")
+    private String address;
 
     @JsonProperty("role")
     private Role role;

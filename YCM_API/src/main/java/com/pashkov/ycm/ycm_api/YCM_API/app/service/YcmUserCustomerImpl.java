@@ -1,11 +1,10 @@
-package com.pashkov.ycm.ycm_api.YCM_API.service;
+package com.pashkov.ycm.ycm_api.YCM_API.app.service;
 
-import com.pashkov.ycm.ycm_api.YCM_API.entity.YcmCustomer;
-import com.pashkov.ycm.ycm_api.YCM_API.repository.YcmUserCustomerRepository;
+import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomer;
+import com.pashkov.ycm.ycm_api.YCM_API.app.repository.YcmUserCustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 /**

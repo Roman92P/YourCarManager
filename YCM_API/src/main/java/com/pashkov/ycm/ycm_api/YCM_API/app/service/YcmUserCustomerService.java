@@ -1,6 +1,6 @@
-package com.pashkov.ycm.ycm_api.YCM_API.service;
+package com.pashkov.ycm.ycm_api.YCM_API.app.service;
 
-import com.pashkov.ycm.ycm_api.YCM_API.entity.YcmCustomer;
+import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomer;
 
 import java.util.Optional;
 

@@ -1,18 +1,16 @@
-package com.pashkov.ycm.ycm_api.YCM_API.entity;
+package com.pashkov.ycm.ycm_api.YCM_API.app.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author - Roman Pashkov
  */
 @Data
 @Entity
-public class Address {
+public class Address implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
