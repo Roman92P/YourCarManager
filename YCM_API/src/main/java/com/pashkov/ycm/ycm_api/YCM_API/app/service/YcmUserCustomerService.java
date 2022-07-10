@@ -12,4 +12,6 @@ public interface YcmUserCustomerService {
     void registerYcmUserCustomer(YcmCustomer ycmCustomer);
 
     Optional<YcmCustomer> getYcmCustomerByNick(String Nick);
+
+    void removeYcmCustomer(long ycmCustomerToRemoveId);
 }

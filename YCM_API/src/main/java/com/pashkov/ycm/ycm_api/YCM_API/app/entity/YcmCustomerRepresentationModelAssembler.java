@@ -22,7 +22,7 @@ public class YcmCustomerRepresentationModelAssembler extends RepresentationModel
         ycmCustomerModel.setLastName(entity.getLastName());
         ycmCustomerModel.setEmail(entity.getEmail());
         Address address = entity.getAddress();
-        ycmCustomerModel.setAddress(address.getTown()+" "+address.getStreet());
+        ycmCustomerModel.setAddress(entity.getAddress());
         return ycmCustomerModel;
     }
 }

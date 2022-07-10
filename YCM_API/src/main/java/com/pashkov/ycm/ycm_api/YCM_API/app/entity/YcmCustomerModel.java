@@ -34,7 +34,7 @@ public class YcmCustomerModel extends RepresentationModel<YcmCustomerModel> {
     private String email;
 
     @JsonProperty("address")
-    private String address;
+    private Address address;
 
     @JsonProperty("role")
     private Role role;

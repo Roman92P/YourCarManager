@@ -5,6 +5,7 @@ import com.pashkov.ycm.ycm_api.YCM_API.app.repository.YcmUserCustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 /**
@@ -25,5 +26,10 @@ public class YcmUserCustomerImpl implements YcmUserCustomerService{
     @Override
     public Optional<YcmCustomer> getYcmCustomerByNick(String nick) {
         return ycmUserCustomerRepository.findByYcmCustomer_nick(nick);
+    }
+
+    @Override
+    public void removeYcmCustomer(long ycmCustomerToRemoveId) {
+        ycmUserCustomerRepository.delete(ycmUserCustomerRepository.findById(ycmCustomerToRemoveId).orElseThrow(EntityNotFoundException::new));
     }
 }

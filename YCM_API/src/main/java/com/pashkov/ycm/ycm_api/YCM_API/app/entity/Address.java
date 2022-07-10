@@ -1,5 +1,6 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.io.Serializable;
  */
 @Data
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Address implements Serializable {
 
     @Id

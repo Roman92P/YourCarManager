@@ -11,28 +11,22 @@ import java.util.Set;
  * Roman Pashkov created on 30.05.2022 inside the package - com.pashkov.ycm.ycm_api.YCM_API.entity
  */
 @Data
-@Entity
-public class YcmService implements Serializable {
+@MappedSuperclass
+public abstract class YcmService implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String servicePrice;
+
     private ServiceEnum serviceType;
-    private YcmCurrency currency;
-    private String timingHours;
+
     private String serviceDescription;
 
-    @ManyToMany(mappedBy = "services")
-    private Set<YcmShop> ycmShops = new HashSet<>();
 
     @Override
     public String toString() {
-        return "Service{" +
+        return "YcmService{" +
                 "id=" + id +
-                ", servicePrice='" + servicePrice + '\'' +
                 ", serviceType=" + serviceType +
-                ", currency=" + currency +
-                ", timingHours='" + timingHours + '\'' +
                 ", serviceDescription='" + serviceDescription + '\'' +
                 '}';
     }

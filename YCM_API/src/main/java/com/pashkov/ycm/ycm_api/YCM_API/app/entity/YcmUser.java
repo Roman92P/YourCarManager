@@ -9,9 +9,7 @@ import java.io.Serializable;
  * @author - Roman Pashkov
  */
 @Data
-//@Entity
 @Table(name = "ycmuser")
-//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @MappedSuperclass
 public abstract class YcmUser implements Serializable {
     @Id

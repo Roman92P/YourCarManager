@@ -17,16 +17,17 @@ import java.util.Set;
 @Table(name = "ycmshop")
 public class YcmShop extends YcmUser implements Serializable {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private int id;
     private String shopName;
     @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "Shop_Services",
         joinColumns = {@JoinColumn(name="ycm_shop_id")},
         inverseJoinColumns = {@JoinColumn(name = "service_id")}
     )
-    private Set<YcmService> services = new HashSet<>();
+    private Set<YcmShopService> services = new HashSet<>();
+
+    @OneToMany
+    @JoinColumn(name = "ycmShop_id")
+    Set<YcmCalendar> ycmCalendars;
 
     @Override
     public String toString() {
