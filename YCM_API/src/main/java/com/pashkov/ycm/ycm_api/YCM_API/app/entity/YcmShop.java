@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**

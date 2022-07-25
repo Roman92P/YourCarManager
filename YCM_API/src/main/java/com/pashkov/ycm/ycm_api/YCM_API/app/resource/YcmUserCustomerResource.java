@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.HashSet;
 
 /**
  * Roman Pashkov created on 30.05.2022 inside the package - com.pashkov.ycm.ycm_api.YCM_API.resource
@@ -55,7 +56,6 @@ public class YcmUserCustomerResource {
 
     @GetMapping(path = "/{nick}/services", produces = "application/json")
     public ResponseEntity<CollectionModel<YcmCustomerServiceModel>> returnUserScheduledServices(@PathVariable String nick){
-
         return null;
     }
 }
