@@ -18,9 +18,9 @@ public class YcmCustomerService extends YcmService {
 
     private String serviceAppointmentDay;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ycmshop_id")
-    private YcmShop ycmShopOfferingService;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "ycmshop_id")
+//    private YcmShop ycmShopOfferingService;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ycmcustomer_id")
@@ -31,7 +31,7 @@ public class YcmCustomerService extends YcmService {
         return "YcmCustomerService{" +
                 "serviceCost='" + serviceCost + '\'' +
                 ", serviceAppointmentDay='" + serviceAppointmentDay + '\'' +
-                ", ycmShopOfferingService=" + ycmShopOfferingService +
+                //", ycmShopOfferingService=" + ycmShopOfferingService +
                 '}';
     }
 }

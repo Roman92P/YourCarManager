@@ -6,10 +6,10 @@ INSERT INTO Car (id, manufacturer, model, vin, production_year) VALUES (2, 'VW',
 INSERT INTO YCMCUSTOMER (id,nick, email, role, name, last_name) VALUES (2,'Roman2','rp@gmail.com',2,'Roman','Pashkov');
 INSERT INTO ADDRESS (id, town, post_code, street, build_number, apartment,country) VALUES (2,'Santa Barbara','00-002','East route','1','4',1);
 UPDATE YCMCUSTOMER SET ADDRESS_ID = 2 WHERE id = 2;
-INSERT INTO YCMSHOP (nick, email, role, address_id, shop_name) VALUES ('shopOne','rp@gmail.com',3,2,'ONE SHOP');
+INSERT INTO YCMSHOP (nick, email, role, address_id, shop_name) VALUES ('shopOne','rp@gmail.com',2,2,'ONE SHOP');
 INSERT INTO YCMSHOPSERVICE (id, service_price, service_type, currency, timing_hours, service_description) VALUES (1,'500',9,0,'0.5','Change motor oil with oil filter');
 INSERT INTO YCMSHOPSERVICE (id, service_price, service_type, currency, timing_hours, service_description) VALUES (2,'300',9,0,'0.5','Replacement of spark plug candles');
 INSERT INTO SHOP_SERVICES (ycm_shop_id, service_id) VALUES (1,1);
 INSERT INTO SHOP_SERVICES (ycm_shop_id, service_id) VALUES (1,2);
-INSERT INTO  YCMCUSTOMERSERVICE(id, service_type, service_description,service_cost, service_appointment_day, ycmshop_id, ycmcustomer_id) VALUES (1, 9, 'Change motor oil with oil filter','500','30-SEP-2022',1,1);
-INSERT INTO  YCMCUSTOMERSERVICE(id, service_type, service_description,service_cost, service_appointment_day, ycmshop_id, ycmcustomer_id) VALUES (2, 9, 'Replacement of spark plug candles','300','30-SEP-2022',1,1);
+INSERT INTO  YCMCUSTOMERSERVICE(id, service_type, service_description,service_cost, service_appointment_day, ycmcustomer_id) VALUES (1, 9, 'Change motor oil with oil filter','500','30-SEP-2022',1);
+INSERT INTO  YCMCUSTOMERSERVICE(id, service_type, service_description,service_cost, service_appointment_day, ycmcustomer_id) VALUES (2, 9, 'Replacement of spark plug candles','300','30-SEP-2022',1);

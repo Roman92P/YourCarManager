@@ -1,11 +1,9 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.resource;
 
-import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomer;
-import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomerModel;
-import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomerServiceModel;
+import com.pashkov.ycm.ycm_api.YCM_API.app.entity.*;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmAddressService;
+import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmCustomerServicesService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmUserCustomerService;
-import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomerRepresentationModelAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Roman Pashkov created on 30.05.2022 inside the package - com.pashkov.ycm.ycm_api.YCM_API.resource
@@ -27,6 +27,9 @@ public class YcmUserCustomerResource {
 
     @Autowired
     YcmAddressService addressService;
+
+    @Autowired
+    YcmCustomerServicesService ycmCustomerServicesService;
 
     @Autowired
     private YcmUserCustomerService ycmUserCustomerService;
@@ -55,7 +58,10 @@ public class YcmUserCustomerResource {
     }
 
     @GetMapping(path = "/{nick}/services", produces = "application/json")
-    public ResponseEntity<CollectionModel<YcmCustomerServiceModel>> returnUserScheduledServices(@PathVariable String nick){
-        return null;
+    public Set<YcmCustomerService> returnUserScheduledServices(@PathVariable String nick){
+        YcmCustomer ycmCustomer = ycmUserCustomerService.getYcmCustomerByNick(nick).orElseThrow(EntityNotFoundException::new);
+        long id = ycmCustomer.getId();
+        Set<YcmCustomerService> ycmCustomerServices = ycmCustomerServicesService.getYcmCustomerServices(id);
+        return ycmCustomerServices;
     }
 }

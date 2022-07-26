@@ -9,5 +9,6 @@ import java.util.Set;
  */
 public interface YcmCustomerServicesService {
 
-    Set<YcmCustomerService> getYcmCustomerServices();
+    Set<YcmCustomerService> getYcmCustomerServices(Long id);
+    Set<YcmCustomerService> getAllServices();
 }
