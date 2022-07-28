@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -19,7 +20,7 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
     @Autowired
     private YcmCustomerServicesRepository ycmCustomerServicesRepository;
     @Override
-    public Set<YcmCustomerService> getYcmCustomerServices(Long usedId) {
+    public List<YcmCustomerService> getYcmCustomerServices(Long usedId) {
         return ycmCustomerServicesRepository.findAllYcmCustomerService(usedId);
     }
 

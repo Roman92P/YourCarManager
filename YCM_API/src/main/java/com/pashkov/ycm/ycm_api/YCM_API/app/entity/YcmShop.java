@@ -26,6 +26,13 @@ public class YcmShop extends YcmUser implements Serializable {
     )
     private Set<YcmShopService> services = new HashSet<>();
 
+    @ManyToMany(cascade = CascadeType.DETACH)
+    @JoinTable(name = "Shop_CustomerServices",
+            joinColumns = {@JoinColumn(name="ycm_shop_id")},
+            inverseJoinColumns = {@JoinColumn(name = "service_id")}
+    )
+    private Set<YcmCustomerService> customerServices = new HashSet<>();
+
     @OneToMany
     @JoinColumn(name = "ycmShop_id")
     Set<YcmCalendar> ycmCalendars;

@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Roman Pashkov created on 10.07.2022 inside the package - com.pashkov.ycm.ycm_api.YCM_API.app.entity
@@ -13,25 +15,20 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ycmcustomerservice")
 public class YcmCustomerService extends YcmService {
-
-    private String serviceCost;
-
     private String serviceAppointmentDay;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "ycmshop_id")
-//    private YcmShop ycmShopOfferingService;
+    private String serviceHour;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ycmcustomer_id")
     private YcmCustomer ycmCustomerPurchaseService;
 
+//    @ManyToMany(mappedBy = "customerServices")
+//    private Set<YcmShop> ycmServiceShops = new HashSet<>();
     @Override
     public String toString() {
         return "YcmCustomerService{" +
-                "serviceCost='" + serviceCost + '\'' +
                 ", serviceAppointmentDay='" + serviceAppointmentDay + '\'' +
-                //", ycmShopOfferingService=" + ycmShopOfferingService +
                 '}';
     }
 }

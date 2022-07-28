@@ -12,15 +12,17 @@ import java.util.Set;
  */
 @Data
 @MappedSuperclass
+@Table(name = "ycmservice")
 public abstract class YcmService implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private ServiceEnum serviceType;
-
     private String serviceDescription;
 
+    private String servicePrice;
+
+    private YcmCurrency currency;
 
     @Override
     public String toString() {

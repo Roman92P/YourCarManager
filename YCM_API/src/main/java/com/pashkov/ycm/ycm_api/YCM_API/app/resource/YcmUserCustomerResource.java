@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -58,10 +59,10 @@ public class YcmUserCustomerResource {
     }
 
     @GetMapping(path = "/{nick}/services", produces = "application/json")
-    public Set<YcmCustomerService> returnUserScheduledServices(@PathVariable String nick){
+    public List<YcmCustomerService> returnUserScheduledServices(@PathVariable String nick){
         YcmCustomer ycmCustomer = ycmUserCustomerService.getYcmCustomerByNick(nick).orElseThrow(EntityNotFoundException::new);
         long id = ycmCustomer.getId();
-        Set<YcmCustomerService> ycmCustomerServices = ycmCustomerServicesService.getYcmCustomerServices(id);
+        List<YcmCustomerService> ycmCustomerServices = ycmCustomerServicesService.getYcmCustomerServices(id);
         return ycmCustomerServices;
     }
 }
