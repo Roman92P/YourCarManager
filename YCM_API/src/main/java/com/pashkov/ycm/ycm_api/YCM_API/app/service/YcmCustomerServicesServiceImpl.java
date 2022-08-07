@@ -47,4 +47,15 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
         ycmCustomerService.setYcmCustomerPurchaseService(ycmCustomer);
         ycmCustomerServicesRepository.deleteById(ycmCustomerService.getId());
     }
+
+    @Override
+    public List<YcmCustomerService> getAllShopCustomerServices(String shopName) {
+        return ycmCustomerServicesRepository.findAllByYcmServiceShops_ShopName(shopName);
+    }
+
+    @Override
+    public void updateYcmCustomerService(YcmCustomerService ycmCustomerService) {
+        ycmCustomerServicesRepository.deleteById(ycmCustomerService.getId());
+        ycmCustomerServicesRepository.save(ycmCustomerService);
+    }
 }

@@ -10,4 +10,10 @@ import java.util.Optional;
 public interface YcmShopService {
 
     YcmShop getShopById(long shopId);
+    
+    void createShop(YcmShop ycmShop);
+    
+    Optional<YcmShop> getShopByName(String shopName);
+
+    void removeYcmShop(YcmShop ycmShop);
 }

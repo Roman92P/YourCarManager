@@ -21,4 +21,19 @@ public class YcmShopServiceImpl implements YcmShopService{
     public YcmShop getShopById(long shopId) {
         return ycmShopRepository.findById(shopId).orElseThrow(EntityNotFoundException::new);
     }
+
+    @Override
+    public void createShop(YcmShop ycmShop) {
+        ycmShopRepository.save(ycmShop);
+    }
+
+    @Override
+    public Optional<YcmShop> getShopByName(String shopName) {
+        return ycmShopRepository.getYcmShopByShopNameIs(shopName);
+    }
+
+    @Override
+    public void removeYcmShop(YcmShop ycmShop) {
+        ycmShopRepository.delete(ycmShop);
+    }
 }

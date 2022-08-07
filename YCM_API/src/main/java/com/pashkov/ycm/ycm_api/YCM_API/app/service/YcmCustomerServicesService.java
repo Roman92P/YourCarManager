@@ -17,4 +17,8 @@ public interface YcmCustomerServicesService {
     Optional<YcmCustomerService> getParticulaCustomerService(String nick, String serviceDay, String serviceHour);
 
     void removeCustomerService(String nick, String serviceDay, String serviceHour);
+
+    List<YcmCustomerService> getAllShopCustomerServices(String shopName);
+
+    void updateYcmCustomerService (YcmCustomerService ycmCustomerService);
 }
