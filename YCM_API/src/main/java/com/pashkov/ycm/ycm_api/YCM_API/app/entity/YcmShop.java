@@ -1,11 +1,13 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,23 +21,17 @@ import java.util.Set;
 public class YcmShop extends YcmUser implements Serializable {
 
     private String shopName;
-    @ManyToMany(cascade = CascadeType.DETACH)
+    @ManyToMany
     @JoinTable(name = "Shop_Services",
         joinColumns = {@JoinColumn(name="ycm_shop_id")},
         inverseJoinColumns = {@JoinColumn(name = "service_id")}
     )
-    private Set<YcmShopService> services = new HashSet<>();
+    @JsonBackReference
+    private List<YcmShopService> services;
 
-    @ManyToMany(cascade = CascadeType.DETACH)
-    @JoinTable(name = "Shop_CustomerServices",
-            joinColumns = {@JoinColumn(name="ycm_shop_id")},
-            inverseJoinColumns = {@JoinColumn(name = "service_id")}
-    )
-    private Set<YcmCustomerService> customerServices = new HashSet<>();
-
-    @OneToMany
-    @JoinColumn(name = "ycmShop_id")
-    Set<YcmCalendar> ycmCalendars;
+//    @OneToMany
+//    @JoinColumn(name = "ycmShop_id")
+//    Set<YcmCalendar> ycmCalendars;
 
     @Override
     public String toString() {

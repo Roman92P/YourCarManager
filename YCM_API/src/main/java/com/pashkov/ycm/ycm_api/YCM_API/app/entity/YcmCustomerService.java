@@ -24,8 +24,9 @@ public class YcmCustomerService extends YcmService implements Serializable {
     @JoinColumn(name = "ycmcustomer_id")
     private YcmCustomer ycmCustomerPurchaseService;
 
-//    @ManyToMany(mappedBy = "customerServices")
-//    private Set<YcmShop> ycmServiceShops = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "shop_id")
+    private YcmShop ycmServiceShops;
     @Override
     public String toString() {
         return "YcmCustomerService{" +

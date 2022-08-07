@@ -78,9 +78,19 @@ public class YcmUserCustomerResource {
 
     @GetMapping(path = "/{nick}/services/{serviceDay}/{serviceHour}")
     @ResponseBody
-    public ResponseEntity<YcmCustomerServiceModel> getParticularCustomerService(@PathVariable
-                                                                                String nick, @PathVariable String serviceDay, @PathVariable String serviceHour) {
-        YcmCustomerService particulaCustomerService = ycmCustomerServicesService.getParticulaCustomerService(nick, serviceDay, serviceHour);
-        return ResponseEntity.ok(ycmCustomerServiceRepresentationModelAssembler.toModel(particulaCustomerService));
+    public ResponseEntity<YcmCustomerServiceModel> getParticularCustomerService(@PathVariable String nick, @PathVariable String serviceDay, @PathVariable String serviceHour) {
+        Optional<YcmCustomerService> particularCustomerService = ycmCustomerServicesService.getParticulaCustomerService(nick, serviceDay, serviceHour);
+        return particularCustomerService.map(ycmCustomerService -> ResponseEntity.ok(ycmCustomerServiceRepresentationModelAssembler.toModel(ycmCustomerService))).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping(path = "/{nick}/services/{serviceDay}/{serviceHour}")
+    @ResponseBody
+    public ResponseEntity<YcmCustomerServiceModel> removeParticularCustomerService(@PathVariable String nick, @PathVariable String serviceDay, @PathVariable String serviceHour) {
+        Optional<YcmCustomerService> particularCustomerService = ycmCustomerServicesService.getParticulaCustomerService(nick, serviceDay, serviceHour);
+        if(!particularCustomerService.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        ycmCustomerServicesService.removeCustomerService(nick, serviceDay, serviceHour);
+        return ResponseEntity.ok().build();
     }
 }

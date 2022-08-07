@@ -3,6 +3,7 @@ package com.pashkov.ycm.ycm_api.YCM_API.app.service;
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomerService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -13,5 +14,7 @@ public interface YcmCustomerServicesService {
     List<YcmCustomerService> getYcmCustomerServices(Long id);
     Set<YcmCustomerService> getAllServices();
 
-    YcmCustomerService getParticulaCustomerService(String nick, String serviceDay, String serviceHour);
+    Optional<YcmCustomerService> getParticulaCustomerService(String nick, String serviceDay, String serviceHour);
+
+    void removeCustomerService(String nick, String serviceDay, String serviceHour);
 }

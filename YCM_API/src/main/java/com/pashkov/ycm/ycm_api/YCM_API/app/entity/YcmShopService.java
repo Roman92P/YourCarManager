@@ -1,11 +1,13 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,12 +19,12 @@ import java.util.Set;
 @Table(name = "ycmshopservice")
 public class YcmShopService extends YcmService implements Serializable {
 
-
     private String timingHours;
 
     @Column(nullable = true)
     @ManyToMany(mappedBy = "services")
-    private Set<YcmShop> ycmShops = new HashSet<>();
+    @JsonManagedReference
+    private List<YcmShop> ycmShops;
 
     @Override
     public String toString() {
