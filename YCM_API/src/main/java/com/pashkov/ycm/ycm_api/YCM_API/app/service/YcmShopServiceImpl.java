@@ -36,4 +36,9 @@ public class YcmShopServiceImpl implements YcmShopService{
     public void removeYcmShop(YcmShop ycmShop) {
         ycmShopRepository.delete(ycmShop);
     }
+
+    @Override
+    public Optional<YcmShop> getShopByShopNick(String shopNick) {
+        return ycmShopRepository.getYcmShopByNick(shopNick);
+    }
 }

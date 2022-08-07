@@ -4,12 +4,14 @@ import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomerService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShop;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmCustomerServicesService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmShopService;
+import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmShopServicesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/shop")
@@ -21,6 +23,9 @@ public class YcmShopResource {
     @Autowired
     YcmCustomerServicesService ycmCustomerServicesService;
 
+    @Autowired
+    YcmShopServicesService ycmShopServicesService;
+
     @GetMapping(path = "/{shopName}")
     @ResponseBody
     public ResponseEntity<YcmShop> getUserShop(@PathVariable String shopName) {
@@ -29,13 +34,15 @@ public class YcmShopResource {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    @ResponseBody
     public ResponseEntity<YcmShop> createNewYcmShop (@RequestBody YcmShop ycmShop) {
+        if(ycmShopService.getShopByName(ycmShop.getShopName()).isPresent() || ycmShopService.getShopByShopNick(ycmShop.getNick()).isPresent()) {
+            return ResponseEntity.badRequest().build();
+        }
         ycmShopService.createShop(ycmShop);
         return ResponseEntity.ok(ycmShop);
     }
 
-    @DeleteMapping(path = "/{shopName}")
+    @DeleteMapping(path = "/{shopName}", consumes = "application/json")
     @ResponseBody
     public ResponseEntity<YcmShop> removeUserShop(@PathVariable String shopName) {
         Optional<YcmShop> shopByName = ycmShopService.getShopByName(shopName);
@@ -50,20 +57,11 @@ public class YcmShopResource {
         ycmShopService.removeYcmShop(shopByName.get());
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping(path = "/services/{shopNick}", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<List<com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShopService>> getShopAvailableServices(@PathVariable String shopNick) {
+        List<com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShopService> shopServicesByShopNick = ycmShopServicesService.getShopServicesByShopNick(shopNick);
+        return ResponseEntity.ok(shopServicesByShopNick);
+    }
 }
-//{
-//    "id": 1,
-//    "nick": "shopOne",
-//    "email": "rp@gmail.com",
-//    "address": {
-//        "id": 2,
-//        "town": "Santa Barbara",
-//        "postCode": "00-002",
-//        "street": "East route",
-//        "buildNumber": "1",
-//        "apartment": "4",
-//        "country": "USA"
-//    },
-//    "role": "SHOP_USER",
-//    "shopName": "ONE SHOP"
-//}

@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,16 +22,16 @@ public class YcmShopService extends YcmService implements Serializable {
 
     private String timingHours;
 
-    @Column(nullable = true)
-    @ManyToMany(mappedBy = "services")
-    @JsonManagedReference
-    private List<YcmShop> ycmShops;
+//    @Column(nullable = true)
+//    @ManyToMany(mappedBy = "services")
+////    @JsonManagedReference
+//    private List<YcmShop> ycmShops;
 
     @Override
     public String toString() {
         return "YcmShopService{" +
                 ", timingHours='" + timingHours + '\'' +
-                ", ycmShops=" + ycmShops +
+                //", ycmShops=" + ycmShops +
                 '}';
     }
 }

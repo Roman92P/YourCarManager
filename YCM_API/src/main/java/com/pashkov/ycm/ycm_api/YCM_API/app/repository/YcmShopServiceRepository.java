@@ -11,5 +11,9 @@ import java.util.List;
 public interface YcmShopServiceRepository extends CrudRepository<YcmShopService, Long> {
 
     @Query("SELECT s FROM  YcmShopService s")
-     List<YcmShopService> getAllServicesWithShopId();
+    List<YcmShopService> getAllServicesWithShopId();
+
+    @Query("SELECT s FROM YcmShopService s inner join YcmShop shop on shop.nick = ?1")
+    List<YcmShopService> getYcmShopServicesByShopNick(String shopNick);
+
 }

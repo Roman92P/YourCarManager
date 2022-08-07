@@ -1,11 +1,13 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,12 +20,13 @@ import java.util.List;
 public class YcmShop extends YcmUser implements Serializable {
 
     private String shopName;
+    @Column(nullable = true)
     @ManyToMany
     @JoinTable(name = "Shop_Services",
         joinColumns = {@JoinColumn(name="ycm_shop_id")},
         inverseJoinColumns = {@JoinColumn(name = "service_id")}
     )
-    @JsonBackReference
+//    @JsonManagedReference
     private List<YcmShopService> services;
 
 //    @OneToMany

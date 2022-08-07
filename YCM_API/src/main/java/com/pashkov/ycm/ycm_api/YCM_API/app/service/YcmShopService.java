@@ -16,4 +16,6 @@ public interface YcmShopService {
     Optional<YcmShop> getShopByName(String shopName);
 
     void removeYcmShop(YcmShop ycmShop);
+
+    Optional<YcmShop> getShopByShopNick(String shopNick);
 }
