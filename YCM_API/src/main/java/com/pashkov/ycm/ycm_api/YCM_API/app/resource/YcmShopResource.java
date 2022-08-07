@@ -6,6 +6,7 @@ import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmCustomerServicesService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmShopService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmShopServicesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,10 +59,16 @@ public class YcmShopResource {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(path = "/services/{shopNick}", produces = "application/json")
+    @GetMapping(path = "/{shopNick}/services", produces = "application/json")
     @ResponseBody
     public ResponseEntity<List<com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShopService>> getShopAvailableServices(@PathVariable String shopNick) {
         List<com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShopService> shopServicesByShopNick = ycmShopServicesService.getShopServicesByShopNick(shopNick);
         return ResponseEntity.ok(shopServicesByShopNick);
+    }
+
+    @PutMapping(path = "/{shopNick}", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<YcmShop> updateYcmShop() {
+        return null;
     }
 }
