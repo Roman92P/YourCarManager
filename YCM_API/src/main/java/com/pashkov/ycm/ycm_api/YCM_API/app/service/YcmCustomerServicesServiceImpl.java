@@ -5,6 +5,7 @@ import com.pashkov.ycm.ycm_api.YCM_API.app.repository.YcmCustomerServicesReposit
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -32,5 +33,10 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
             result.add((YcmCustomerService) all.next());
         }
         return result;
+    }
+
+    @Override
+    public YcmCustomerService getParticulaCustomerService(String nick, String serviceDay, String serviceHour) {
+        return ycmCustomerServicesRepository.findCustomerServiceByDate(nick, serviceDay, serviceHour).orElseThrow(EntityNotFoundException::new);
     }
 }

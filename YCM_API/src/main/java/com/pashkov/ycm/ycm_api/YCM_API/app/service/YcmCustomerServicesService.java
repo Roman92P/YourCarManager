@@ -12,4 +12,6 @@ public interface YcmCustomerServicesService {
 
     List<YcmCustomerService> getYcmCustomerServices(Long id);
     Set<YcmCustomerService> getAllServices();
+
+    YcmCustomerService getParticulaCustomerService(String nick, String serviceDay, String serviceHour);
 }
