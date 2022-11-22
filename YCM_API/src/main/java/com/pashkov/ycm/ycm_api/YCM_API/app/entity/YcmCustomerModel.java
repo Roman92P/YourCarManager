@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
-import static com.fasterxml.jackson.annotation.JsonInclude.*;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * Roman Pashkov created on 05.07.2022 inside the package - com.pashkov.ycm.ycm_api.YCM_API.entity

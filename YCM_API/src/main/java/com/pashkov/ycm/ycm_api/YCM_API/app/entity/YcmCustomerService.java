@@ -1,13 +1,10 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.entity;
 
-import com.sun.xml.internal.ws.developer.Serialization;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Roman Pashkov created on 10.07.2022 inside the package - com.pashkov.ycm.ycm_api.YCM_API.app.entity
@@ -19,6 +16,8 @@ import java.util.Set;
 public class YcmCustomerService extends YcmService implements Serializable {
     private String serviceAppointmentDay;
     private String serviceHour;
+    private String startTimestamp;
+    private String endTimestamp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ycmcustomer_id")

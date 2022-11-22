@@ -10,25 +10,29 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-public class YcmCalendar implements Serializable {
+public class YcmShopCalendar implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    //must be many to one
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ycmShop_id")
     private YcmShop ycmShop;
 
-    @Transient
-    private String currentDate;
 
-    @Transient
-    private String currentMonth;
-
-    @Transient
-    private int currentYear;
-
-    private int numberOfWorkingHours;
+    // to do probably will be better to have List<YcmCustomerServices>
+    // probably we don't need it
+//    @Transient
+//    private String currentDate;
+//
+//    @Transient
+//    private String currentMonth;
+//
+//    @Transient
+//    private int currentYear;
+//
+//    private int numberOfWorkingHours;
 
 }

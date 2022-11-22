@@ -1,17 +1,14 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.service;
 
-import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShop;
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShopService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.repository.YcmShopRepository;
 import com.pashkov.ycm.ycm_api.YCM_API.app.repository.YcmShopServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class YcmShopServicesServiceImpl implements YcmShopServicesService {

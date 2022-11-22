@@ -6,13 +6,11 @@ import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmCustomerServicesService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmShopService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmShopServicesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/shop")
