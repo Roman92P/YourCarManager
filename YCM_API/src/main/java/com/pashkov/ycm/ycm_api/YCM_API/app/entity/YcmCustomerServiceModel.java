@@ -39,4 +39,7 @@ public class YcmCustomerServiceModel  extends RepresentationModel<YcmCustomerSer
     @JsonProperty
     private YcmCustomerModel ycmCustomerPurchaseService;
 
+    @JsonProperty
+    private YcmShop ycmShop;
+
 }

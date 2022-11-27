@@ -1,12 +1,15 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.resource;
 
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.*;
+import com.pashkov.ycm.ycm_api.YCM_API.app.exceptions.CustomerAppointmentAlreadyScheduledException;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmAddressService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmCustomerServicesService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmUserCustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -81,12 +84,43 @@ public class YcmUserCustomerResource {
 
     @DeleteMapping(path = "/{nick}/services/{serviceDay}/{serviceHour}")
     @ResponseBody
-    public ResponseEntity<YcmCustomerServiceModel> removeParticularCustomerService(@PathVariable String nick, @PathVariable String serviceDay, @PathVariable String serviceHour) {
-        Optional<YcmCustomerService> particularCustomerService = ycmCustomerServicesService.getParticulaCustomerService(nick, serviceDay, serviceHour);
-        if(!particularCustomerService.isPresent()) {
+    public ResponseEntity<YcmCustomerServiceModel> removeParticularCustomerService(@PathVariable String nick,
+                                                                                   @PathVariable String serviceDay,
+                                                                                   @PathVariable String serviceHour) {
+        Optional<YcmCustomerService> particularCustomerService = ycmCustomerServicesService
+                .getParticulaCustomerService(nick, serviceDay, serviceHour);
+        if (!particularCustomerService.isPresent()) {
             return ResponseEntity.notFound().build();
         }
         ycmCustomerServicesService.removeCustomerService(nick, serviceDay, serviceHour);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping(path = "/{nick}/services", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<YcmCustomerServiceModel> scheduleNewShopServiceAppointment(
+            @Validated @RequestBody YcmCustomerNewAppointmentDTO ycmCustomerNewAppointmentDTO,
+            @PathVariable String nick) {
+        YcmCustomerService newCustomerAppointment = ycmCustomerServicesService
+                .scheduleNewAppointment(nick, ycmCustomerNewAppointmentDTO);
+        return ResponseEntity.ok(ycmCustomerServiceRepresentationModelAssembler.toModel(newCustomerAppointment));
+    }
+
+    @ExceptionHandler ({CustomerAppointmentAlreadyScheduledException.class})
+    public ResponseEntity handleDuplicateServiceSchedulingException() {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+//{
+//        "shopName":"ONE SHOP",
+//        "ycmShopServiceEntity" :
+//        {
+//             "currency" : 0,
+//             "serviceDescription" : "Some test description",
+//             "servicePrice" : 300,
+//             "serviceType" : 9,
+//             "timingHours" : 2
+//        },
+//        "serviceAppointmentDay" : "01-Dec-2022",
+//        "serviceAppointmentHour" : "13:00"
+//    }
 }

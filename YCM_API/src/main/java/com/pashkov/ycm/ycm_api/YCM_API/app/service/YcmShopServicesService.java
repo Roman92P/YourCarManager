@@ -1,14 +1,18 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.service;
 
-import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShopService;
+import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShopServiceEntity;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface YcmShopServicesService {
-    List<YcmShopService> getAllShopServices();
+    List<YcmShopServiceEntity> getAllShopServices();
 
-    Optional<YcmShopService> getShopServiceByServiceId(Long id);
+    Optional<YcmShopServiceEntity> getShopServiceByServiceId(Long id);
 
-    List<YcmShopService> getShopServicesByShopNick(String shopNick);
+    List<YcmShopServiceEntity> getShopServicesByShopNick(String shopNick);
+
+    List<YcmShopServiceEntity> addServiceToShop(String shopNick, YcmShopServiceEntity ycmShopServiceEntity);
+
+    List<YcmShopServiceEntity> removeServiceFromShopServices(String shopNick, YcmShopServiceEntity ycmShopServiceEntity);
 }

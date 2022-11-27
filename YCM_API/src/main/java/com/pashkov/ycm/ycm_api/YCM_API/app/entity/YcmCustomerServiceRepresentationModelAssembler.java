@@ -27,6 +27,7 @@ public class YcmCustomerServiceRepresentationModelAssembler extends Representati
         ycmCustomerServiceModel.setServiceHour(entity.getServiceHour());
         YcmCustomerModel ycmCustomerModel = ycmCustomerRepresentationModelAssembler.toModel(entity.getYcmCustomerPurchaseService());
         ycmCustomerServiceModel.setYcmCustomerPurchaseService(ycmCustomerModel);
+        ycmCustomerServiceModel.setYcmShop(entity.getYcmShop());
         return ycmCustomerServiceModel;
     }
 

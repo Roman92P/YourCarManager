@@ -1,25 +1,30 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.service;
 
-import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomer;
-import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomerService;
+import com.pashkov.ycm.ycm_api.YCM_API.app.entity.*;
+import com.pashkov.ycm.ycm_api.YCM_API.app.entity.mapper.CustomerAppointmentToYcmCustomerServiceMapper;
+import com.pashkov.ycm.ycm_api.YCM_API.app.exceptions.CustomerAppointmentAlreadyScheduledException;
 import com.pashkov.ycm.ycm_api.YCM_API.app.repository.YcmCustomerServicesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Roman Pashkov created on 25.07.2022 inside the package - com.pashkov.ycm.ycm_api.YCM_API.app.service
  */
 
 @Service
-public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesService{
-
+public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesService {
     @Autowired
-    private  YcmUserCustomerService ycmUserCustomerService;
+    private YcmUserCustomerService ycmUserCustomerService;
     @Autowired
     private YcmCustomerServicesRepository ycmCustomerServicesRepository;
+
+    @Autowired
+    private CustomerAppointmentToYcmCustomerServiceMapper customerAppointmentToYcmCustomerServiceMapper;
+
     @Override
     public List<YcmCustomerService> getYcmCustomerServices(Long usedId) {
         return ycmCustomerServicesRepository.findAllYcmCustomerService(usedId);
@@ -50,12 +55,39 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
 
     @Override
     public List<YcmCustomerService> getAllShopCustomerServices(String shopName) {
-        return ycmCustomerServicesRepository.findAllByYcmServiceShops_ShopName(shopName);
+        return ycmCustomerServicesRepository.findAllByYcmShop_ShopName(shopName);
     }
 
     @Override
     public void updateYcmCustomerService(YcmCustomerService ycmCustomerService) {
         ycmCustomerServicesRepository.deleteById(ycmCustomerService.getId());
         ycmCustomerServicesRepository.save(ycmCustomerService);
+    }
+
+    @Override
+    public YcmCustomerService scheduleNewAppointment
+            (String nick, YcmCustomerNewAppointmentDTO ycmCustomerNewAppointmentDTO) {
+        Optional<YcmCustomer> ycmCustomerByNick = ycmUserCustomerService.getYcmCustomerByNick(nick);
+        if (!ycmCustomerByNick.isPresent()) {
+            throw new EntityNotFoundException();
+        }
+        YcmCustomer ycmCustomer = ycmCustomerByNick.get();
+        YcmCustomerService ycmCustomerNewService =
+               customerAppointmentToYcmCustomerServiceMapper.mapCustomerAppointmentDtoToYcmCustomerService
+                        (ycmCustomerNewAppointmentDTO, ycmCustomer);
+        List<YcmCustomerService> allYcmCustomerService = ycmCustomerServicesRepository.findAllYcmCustomerService(ycmCustomer.getId());
+        boolean throwDuplicate = false;
+        for (YcmCustomerService service : allYcmCustomerService) {
+            if (service.equals(ycmCustomerNewService)) {
+                throwDuplicate = true;
+                break;
+            }
+        }
+        if (throwDuplicate) {
+            throw new CustomerAppointmentAlreadyScheduledException(String.format("Appointment in %s for %s already in your calender",
+                    ycmCustomerNewService.getYcmShop().getShopName(), ycmCustomerNewService.getStartTimestamp()));
+        }
+        ycmCustomerServicesRepository.save(ycmCustomerNewService);
+        return ycmCustomerNewService;
     }
 }

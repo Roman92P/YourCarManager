@@ -21,5 +21,5 @@ public interface YcmCustomerServicesRepository extends CrudRepository <YcmCustom
    @Query("select s from  YcmCustomerService s where s.ycmCustomerPurchaseService.nick = ?1 and  s.serviceAppointmentDay = ?2 and  s.serviceHour = ?3")
     Optional <YcmCustomerService> findCustomerServiceByDate(String nick, String serviceDay, String serviceHour1);
 
-    List<YcmCustomerService> findAllByYcmServiceShops_ShopName(String shopName);
+    List<YcmCustomerService> findAllByYcmShop_ShopName(String shopName);
 }

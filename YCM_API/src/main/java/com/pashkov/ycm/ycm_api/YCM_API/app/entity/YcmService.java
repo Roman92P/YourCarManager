@@ -10,11 +10,9 @@ import java.io.Serializable;
  */
 @Data
 @MappedSuperclass
-@Table(name = "ycmservice")
+//@Table(name = "ycmservice")
 public abstract class YcmService implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+
     private ServiceEnum serviceType;
     private String serviceDescription;
 
@@ -25,7 +23,7 @@ public abstract class YcmService implements Serializable {
     @Override
     public String toString() {
         return "YcmService{" +
-                "id=" + id +
+//                "id=" + id +
                 ", serviceType=" + serviceType +
                 ", serviceDescription='" + serviceDescription + '\'' +
                 '}';

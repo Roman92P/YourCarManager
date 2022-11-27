@@ -23,12 +23,10 @@ public class YcmShop extends YcmUser implements Serializable {
         joinColumns = {@JoinColumn(name="ycm_shop_id")},
         inverseJoinColumns = {@JoinColumn(name = "service_id")}
     )
-//    @JsonManagedReference
-    private List<YcmShopService> services;
+    private List<YcmShopServiceEntity> services;
 
-//    @OneToMany
-//    @JoinColumn(name = "ycmShop_id")
-//    Set<YcmCalendar> ycmCalendars;
+    @OneToMany(mappedBy = "ycmShop")
+    private List<YcmCustomerService> customerAppointments;
 
     @Override
     public String toString() {

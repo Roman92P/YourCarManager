@@ -1,5 +1,6 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.service;
 
+import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomerNewAppointmentDTO;
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomerService;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface YcmCustomerServicesService {
     List<YcmCustomerService> getAllShopCustomerServices(String shopName);
 
     void updateYcmCustomerService (YcmCustomerService ycmCustomerService);
+
+    YcmCustomerService scheduleNewAppointment(String nick, YcmCustomerNewAppointmentDTO ycmCustomerNewAppointmentDTO);
 }

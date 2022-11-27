@@ -2,6 +2,7 @@ package com.pashkov.ycm.ycm_api.YCM_API.app.resource;
 
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomerService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShop;
+import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShopServiceEntity;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmCustomerServicesService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmShopService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmShopServicesService;
@@ -33,8 +34,8 @@ public class YcmShopResource {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<YcmShop> createNewYcmShop (@RequestBody YcmShop ycmShop) {
-        if(ycmShopService.getShopByName(ycmShop.getShopName()).isPresent() || ycmShopService.getShopByShopNick(ycmShop.getNick()).isPresent()) {
+    public ResponseEntity<YcmShop> createNewYcmShop(@RequestBody YcmShop ycmShop) {
+        if (ycmShopService.getShopByName(ycmShop.getShopName()).isPresent() || ycmShopService.getShopByShopNick(ycmShop.getNick()).isPresent()) {
             return ResponseEntity.badRequest().build();
         }
         ycmShopService.createShop(ycmShop);
@@ -45,12 +46,12 @@ public class YcmShopResource {
     @ResponseBody
     public ResponseEntity<YcmShop> removeUserShop(@PathVariable String shopName) {
         Optional<YcmShop> shopByName = ycmShopService.getShopByName(shopName);
-        if(!shopByName.isPresent()) {
+        if (!shopByName.isPresent()) {
             return ResponseEntity.notFound().build();
         }
         List<YcmCustomerService> shopCustomerServices = ycmCustomerServicesService.getAllShopCustomerServices(shopName);
         for (YcmCustomerService ycmCustomerService : shopCustomerServices) {
-            ycmCustomerService.setYcmServiceShops(null);
+            ycmCustomerService.setYcmShop(null);
             ycmCustomerServicesService.updateYcmCustomerService(ycmCustomerService);
         }
         ycmShopService.removeYcmShop(shopByName.get());
@@ -59,14 +60,25 @@ public class YcmShopResource {
 
     @GetMapping(path = "/{shopNick}/services", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<List<com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShopService>> getShopAvailableServices(@PathVariable String shopNick) {
-        List<com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShopService> shopServicesByShopNick = ycmShopServicesService.getShopServicesByShopNick(shopNick);
+    public ResponseEntity<List<YcmShopServiceEntity>> getShopAvailableServices(@PathVariable String shopNick) {
+        List<YcmShopServiceEntity> shopServicesByShopNick = ycmShopServicesService.getShopServicesByShopNick(shopNick);
         return ResponseEntity.ok(shopServicesByShopNick);
     }
 
-    @PutMapping(path = "/{shopNick}", consumes = "application/json", produces = "application/json")
+    @PutMapping(path = "/{shopNick}/services", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<YcmShop> updateYcmShop() {
-        return null;
+    public ResponseEntity<List<YcmShopServiceEntity>> addNewServiceToShop(@PathVariable String shopNick,
+                                                                          @RequestBody YcmShopServiceEntity ycmShopServiceEntity) {
+        List<YcmShopServiceEntity> updateShopServices = ycmShopServicesService.addServiceToShop(shopNick, ycmShopServiceEntity);
+        return ResponseEntity.ok(updateShopServices);
     }
+
+    @DeleteMapping(path = "/{shopNick}/services", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<List<YcmShopServiceEntity>> removeServiceFromShop(@PathVariable String shopNick,
+                                                                          @RequestBody YcmShopServiceEntity ycmShopServiceEntity) {
+        List<YcmShopServiceEntity> updateShopServices = ycmShopServicesService.removeServiceFromShopServices(shopNick, ycmShopServiceEntity);
+        return ResponseEntity.ok(updateShopServices);
+    }
+
 }
