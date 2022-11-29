@@ -42,4 +42,7 @@ public class YcmCustomerServiceModel  extends RepresentationModel<YcmCustomerSer
     @JsonProperty
     private YcmShop ycmShop;
 
+    @JsonProperty
+    private String shortServiceName;
+
 }

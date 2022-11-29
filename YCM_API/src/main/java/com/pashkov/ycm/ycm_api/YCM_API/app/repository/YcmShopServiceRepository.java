@@ -17,4 +17,7 @@ public interface YcmShopServiceRepository extends CrudRepository<YcmShopServiceE
     @Query("SELECT s FROM YcmShopServiceEntity s inner join YcmShop shop on shop.nick = ?1")
     List<YcmShopServiceEntity> getYcmShopServicesByShopNick(String shopNick);
 
+    @Query("SELECT s FROM YcmShopServiceEntity s inner join YcmShop shop on shop.id = ?2 Where s.shortServiceName = ?1")
+    YcmShopServiceEntity findShopServiceByShopIdAndShortServiceName(String shortServiceName, long shopId);
+
 }

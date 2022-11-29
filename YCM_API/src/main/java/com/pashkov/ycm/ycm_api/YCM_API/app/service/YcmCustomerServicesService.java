@@ -2,6 +2,7 @@ package com.pashkov.ycm.ycm_api.YCM_API.app.service;
 
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomerNewAppointmentDTO;
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomerService;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,4 +25,6 @@ public interface YcmCustomerServicesService {
     void updateYcmCustomerService (YcmCustomerService ycmCustomerService);
 
     YcmCustomerService scheduleNewAppointment(String nick, YcmCustomerNewAppointmentDTO ycmCustomerNewAppointmentDTO);
+
+    boolean dateForServiceInShopIsNotAvailable(long shopId, String shortServiceName, String serviceDay, String serviceHour);
 }

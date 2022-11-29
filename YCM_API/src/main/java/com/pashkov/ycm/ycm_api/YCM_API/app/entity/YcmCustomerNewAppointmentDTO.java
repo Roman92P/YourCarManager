@@ -11,7 +11,8 @@ import java.io.Serializable;
 @Data
 public class YcmCustomerNewAppointmentDTO implements Serializable {
     private String shopName;
-    private YcmShopServiceEntity ycmShopServiceEntity;
+    //private YcmShopServiceEntity ycmShopServiceEntity;
+    private String ycmShopShortServiceName;
     private String serviceAppointmentDay;
     private String serviceAppointmentHour;
 }

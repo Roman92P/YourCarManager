@@ -2,6 +2,7 @@ package com.pashkov.ycm.ycm_api.YCM_API.app.entity.mapper;
 
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.*;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmShopService;
+import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmShopServicesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +11,6 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -21,20 +21,27 @@ import java.util.Optional;
 public class CustomerAppointmentToYcmCustomerServiceMapper {
 
     @Autowired
-    private  YcmShopService ycmShopService;
+    YcmShopService ycmShopService;
+
+    @Autowired
+    YcmShopServicesService ycmShopServicesService;
 
     public YcmCustomerService mapCustomerAppointmentDtoToYcmCustomerService
             (YcmCustomerNewAppointmentDTO ycmCustomerNewAppointmentDTO, YcmCustomer ycmCustomer) {
-        if (ycmCustomer == null || ycmCustomerNewAppointmentDTO.getYcmShopServiceEntity() == null) {
+        if (ycmCustomer == null) {
             throw new EntityNotFoundException();
         }
 
-        YcmShopServiceEntity ycmShopServiceEntity = ycmCustomerNewAppointmentDTO.getYcmShopServiceEntity();
         String shopName = ycmCustomerNewAppointmentDTO.getShopName();
         Optional<YcmShop> shopByName = ycmShopService.getShopByName(shopName);
         if (!shopByName.isPresent()) {
             throw new EntityNotFoundException();
         }
+        Optional<YcmShopServiceEntity> serviceOptional = ycmShopServicesService.getShopServiceByServiceShortName(ycmCustomerNewAppointmentDTO.getYcmShopShortServiceName(), shopByName.get().getId());
+        if (!serviceOptional.isPresent()) {
+            throw new EntityNotFoundException();
+        }
+        YcmShopServiceEntity ycmShopServiceEntity = serviceOptional.get();
         String timingHours = ycmShopServiceEntity.getTimingHours();
         String serviceAppointmentDay = ycmCustomerNewAppointmentDTO.getServiceAppointmentDay();
         String serviceAppointmentHour = ycmCustomerNewAppointmentDTO.getServiceAppointmentHour();
@@ -57,6 +64,7 @@ public class CustomerAppointmentToYcmCustomerServiceMapper {
         ycmCustomerService.setCurrency(ycmShopServiceEntity.getCurrency());
         ycmCustomerService.setServicePrice(ycmShopServiceEntity.getServicePrice());
         ycmCustomerService.setServiceType(ycmShopServiceEntity.getServiceType());
+        ycmCustomerService.setShortServiceName(ycmShopServiceEntity.getShortServiceName());
         return ycmCustomerService;
     }
 

@@ -1,5 +1,6 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.service;
 
+import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomerService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShopServiceEntity;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface YcmShopServicesService {
     List<YcmShopServiceEntity> addServiceToShop(String shopNick, YcmShopServiceEntity ycmShopServiceEntity);
 
     List<YcmShopServiceEntity> removeServiceFromShopServices(String shopNick, YcmShopServiceEntity ycmShopServiceEntity);
+
+    boolean selectedServiceIsAvailableInSelectedShop(YcmCustomerService ycmCustomerNewService);
+
+    Optional<YcmShopServiceEntity> getShopServiceByServiceShortName(String shortName, long shopId);
 }

@@ -3,13 +3,14 @@ package com.pashkov.ycm.ycm_api.YCM_API.app.service;
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.*;
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.mapper.CustomerAppointmentToYcmCustomerServiceMapper;
 import com.pashkov.ycm.ycm_api.YCM_API.app.exceptions.CustomerAppointmentAlreadyScheduledException;
+import com.pashkov.ycm.ycm_api.YCM_API.app.exceptions.DateHourForSelectedServiceIsNotAvailable;
+import com.pashkov.ycm.ycm_api.YCM_API.app.exceptions.SelectedServiceIsNotAvailableInThisShop;
 import com.pashkov.ycm.ycm_api.YCM_API.app.repository.YcmCustomerServicesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Roman Pashkov created on 25.07.2022 inside the package - com.pashkov.ycm.ycm_api.YCM_API.app.service
@@ -18,12 +19,13 @@ import java.util.stream.Collectors;
 @Service
 public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesService {
     @Autowired
-    private YcmUserCustomerService ycmUserCustomerService;
+     YcmUserCustomerService ycmUserCustomerService;
     @Autowired
-    private YcmCustomerServicesRepository ycmCustomerServicesRepository;
-
+     YcmCustomerServicesRepository ycmCustomerServicesRepository;
     @Autowired
-    private CustomerAppointmentToYcmCustomerServiceMapper customerAppointmentToYcmCustomerServiceMapper;
+     CustomerAppointmentToYcmCustomerServiceMapper customerAppointmentToYcmCustomerServiceMapper;
+    @Autowired
+    YcmShopServicesService ycmShopServicesService;
 
     @Override
     public List<YcmCustomerService> getYcmCustomerServices(Long usedId) {
@@ -87,7 +89,20 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
             throw new CustomerAppointmentAlreadyScheduledException(String.format("Appointment in %s for %s already in your calender",
                     ycmCustomerNewService.getYcmShop().getShopName(), ycmCustomerNewService.getStartTimestamp()));
         }
+        if (!ycmShopServicesService.selectedServiceIsAvailableInSelectedShop(ycmCustomerNewService)) {
+            throw new SelectedServiceIsNotAvailableInThisShop("Selected service is not available");
+        }
+        if (dateForServiceInShopIsNotAvailable(ycmCustomerNewService.getYcmShop().getId(),
+                ycmCustomerNewService.getShortServiceName(),
+                ycmCustomerNewService.getServiceAppointmentDay(), ycmCustomerNewService.getServiceHour())) {
+            throw new DateHourForSelectedServiceIsNotAvailable("Select another day or/and time");
+        }
         ycmCustomerServicesRepository.save(ycmCustomerNewService);
         return ycmCustomerNewService;
+    }
+
+    @Override
+    public boolean dateForServiceInShopIsNotAvailable(long shopId, String shortServiceName, String serviceDay, String serviceHour) {
+        return ycmCustomerServicesRepository.existsByShopIdShortServiceNameAndDate(shopId,shortServiceName, serviceDay, serviceHour);
     }
 }

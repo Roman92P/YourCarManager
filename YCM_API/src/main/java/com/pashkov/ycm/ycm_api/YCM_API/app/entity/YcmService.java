@@ -20,6 +20,8 @@ public abstract class YcmService implements Serializable {
 
     private YcmCurrency currency;
 
+    private String shortServiceName;
+
     @Override
     public String toString() {
         return "YcmService{" +

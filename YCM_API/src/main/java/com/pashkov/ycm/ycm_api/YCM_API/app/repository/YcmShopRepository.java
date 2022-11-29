@@ -14,4 +14,6 @@ public interface YcmShopRepository extends CrudRepository<YcmShop, Long> {
     Optional<YcmShop> getYcmShopByShopNameIs(String shopName);
     Optional<YcmShop> getYcmShopByNick(String shopNick);
 
+
+
 }

@@ -1,5 +1,6 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.service;
 
+import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmCustomerService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShop;
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.YcmShopServiceEntity;
 import com.pashkov.ycm.ycm_api.YCM_API.app.repository.YcmShopRepository;
@@ -58,7 +59,8 @@ public class YcmShopServicesServiceImpl implements YcmShopServicesService {
     }
 
     @Override
-    public List<YcmShopServiceEntity> removeServiceFromShopServices(String shopNick, YcmShopServiceEntity ycmShopServiceEntity) {
+    public List<YcmShopServiceEntity> removeServiceFromShopServices
+            (String shopNick, YcmShopServiceEntity ycmShopServiceEntity) {
         Optional<YcmShop> ycmShopByNick = ycmShopRepository.getYcmShopByNick(shopNick);
         if (!ycmShopByNick.isPresent()) {
             throw new EntityNotFoundException();
@@ -71,5 +73,21 @@ public class YcmShopServicesServiceImpl implements YcmShopServicesService {
         ycmShop.setServices(updatedShopServiceList);
         ycmShopRepository.save(ycmShop);
         return updatedShopServiceList;
+    }
+
+    @Override
+    public boolean selectedServiceIsAvailableInSelectedShop(YcmCustomerService ycmCustomerNewService) {
+        List<YcmShopServiceEntity> ycmShopServicesByShopNick =
+                ycmShopServiceRepository.getYcmShopServicesByShopNick(ycmCustomerNewService.getYcmShop().getNick());
+        long numberOfSuchServices = ycmShopServicesByShopNick.stream()
+                .filter(ycmShopServiceEntity -> ycmShopServiceEntity.getServiceDescription()
+                        .equals(ycmShopServiceEntity.getServiceDescription()))
+                .count();
+        return numberOfSuchServices != 0;
+    }
+
+    @Override
+    public Optional<YcmShopServiceEntity> getShopServiceByServiceShortName(String shortName, long shopId) {
+        return Optional.ofNullable(ycmShopServiceRepository.findShopServiceByShopIdAndShortServiceName(shortName, shopId));
     }
 }
