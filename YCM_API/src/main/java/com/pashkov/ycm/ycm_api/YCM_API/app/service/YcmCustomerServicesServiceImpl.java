@@ -3,7 +3,6 @@ package com.pashkov.ycm.ycm_api.YCM_API.app.service;
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.*;
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.mapper.CustomerAppointmentToYcmCustomerServiceMapper;
 import com.pashkov.ycm.ycm_api.YCM_API.app.exceptions.CustomerAppointmentAlreadyScheduledException;
-import com.pashkov.ycm.ycm_api.YCM_API.app.exceptions.DateHourForSelectedServiceIsNotAvailable;
 import com.pashkov.ycm.ycm_api.YCM_API.app.exceptions.SelectedServiceIsNotAvailableInThisShop;
 import com.pashkov.ycm.ycm_api.YCM_API.app.repository.YcmCustomerServicesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,8 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
      CustomerAppointmentToYcmCustomerServiceMapper customerAppointmentToYcmCustomerServiceMapper;
     @Autowired
     YcmShopServicesService ycmShopServicesService;
+    @Autowired
+    YcmShopService ycmShopService;
 
     @Override
     public List<YcmCustomerService> getYcmCustomerServices(Long usedId) {
@@ -92,11 +93,17 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
         if (!ycmShopServicesService.selectedServiceIsAvailableInSelectedShop(ycmCustomerNewService)) {
             throw new SelectedServiceIsNotAvailableInThisShop("Selected service is not available");
         }
-        if (dateForServiceInShopIsNotAvailable(ycmCustomerNewService.getYcmShop().getId(),
-                ycmCustomerNewService.getShortServiceName(),
-                ycmCustomerNewService.getServiceAppointmentDay(), ycmCustomerNewService.getServiceHour())) {
-            throw new DateHourForSelectedServiceIsNotAvailable("Select another day or/and time");
-        }
+
+        //check if shop have available worker for chosen service
+        ServiceEnum serviceType = ycmCustomerNewService.getServiceType();
+        Set<YcmShopWorker> allShopWorkersWithNeededSpecialization = ycmShopService.getAllShopWorkersWithNeededSpecialization(ycmCustomerNewService.getYcmShop().getNick(), serviceType);
+
+//        if (dateForServiceInShopIsNotAvailable(ycmCustomerNewService.getYcmShop().getId(),
+//                ycmCustomerNewService.getShortServiceName(),
+//                ycmCustomerNewService.getServiceAppointmentDay(), ycmCustomerNewService.getServiceHour())) {
+//            throw new DateHourForSelectedServiceIsNotAvailable("Select another day or/and time");
+//        }
+
         ycmCustomerServicesRepository.save(ycmCustomerNewService);
         return ycmCustomerNewService;
     }

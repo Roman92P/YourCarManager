@@ -123,4 +123,12 @@ public class YcmUserCustomerResource {
 //        "serviceAppointmentDay" : "01-Dec-2022",
 //        "serviceAppointmentHour" : "13:00"
 //    }
+
+    // post -  http://localhost:8081/ycm_api/user/Roman2/services
+    //{
+    //        "shopName":"ONE SHOP",
+    //        "ycmShopShortServiceName" : "Motor oil",
+    //        "serviceAppointmentDay" : "01-Dec-2022",
+    //        "serviceAppointmentHour" : "13:30"
+    //    }
 }

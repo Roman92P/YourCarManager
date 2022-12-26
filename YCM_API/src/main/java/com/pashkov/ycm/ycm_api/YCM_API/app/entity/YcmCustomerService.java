@@ -33,6 +33,10 @@ public class YcmCustomerService extends YcmService implements Serializable {
     @JoinColumn(name = "shop_id")
     private YcmShop ycmShop;
 
+    @ManyToOne
+    @JoinColumn(name = "worker_id")
+    private YcmShopWorker ycmShopWorker;
+
     @Override
     public String toString() {
         return "YcmCustomerService{" +
@@ -46,7 +50,7 @@ public class YcmCustomerService extends YcmService implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         YcmCustomerService that = (YcmCustomerService) o;
-        return  startTimestamp.equals(that.startTimestamp) && ycmCustomerPurchaseService.getId() == that.ycmCustomerPurchaseService.getId() && ycmShop.getId() == that.ycmShop.getId();
+        return startTimestamp.equals(that.startTimestamp) && ycmCustomerPurchaseService.getId() == that.ycmCustomerPurchaseService.getId() && ycmShop.getId() == that.ycmShop.getId();
     }
 
     @Override
