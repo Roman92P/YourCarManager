@@ -19,7 +19,7 @@ INSERT INTO YCMWORKER_SERVICETYPE (worker_id, worker_specialization) VALUES (1, 
 INSERT INTO YCMWORKER_SERVICETYPE (worker_id, worker_specialization) VALUES (1, 'TRANSMISSION');
 INSERT INTO YCMWORKER_SERVICETYPE (worker_id, worker_specialization) VALUES (1, 'TIRES');
 INSERT INTO YCMWORKER_SERVICETYPE (worker_id, worker_specialization) VALUES (1, 'MAINTENANCE');
---INSERT INTO YCMWORKER_SERVICETYPE (worker_id, worker_specialization) VALUES (1, 'OTHER');
+INSERT INTO YCMWORKER_SERVICETYPE (worker_id, worker_specialization) VALUES (1, 'OTHER');
 INSERT INTO  YCMCUSTOMERSERVICE(service_type, service_description,service_price, currency, service_appointment_day, ycmcustomer_id, service_hour, shop_id, short_service_name, worker_id, start_timestamp, end_timestamp) VALUES (9, 'Change motor oil with oil filter','500', 0, '30-Sep-2022',1, '16:00', 1, 'Motor oil', 1, '2022-09-30 16:00:00.0', '2022-09-30 16:30:00.0');
 INSERT INTO  YCMCUSTOMERSERVICE(service_type, service_description,service_price, currency, service_appointment_day, ycmcustomer_id, service_hour, shop_id, short_service_name, worker_id, start_timestamp, end_timestamp) VALUES (9, 'Replacement of spark plug candles','300', 0,'30-Sep-2022',2, '16:30', 1,  'Engine candles', 1, '2022-09-30 16:30:00.0', '2022-09-30 17:00:00.0');
 INSERT INTO  YCMCUSTOMERSERVICE(service_type, service_description,service_price, currency, service_appointment_day, ycmcustomer_id, service_hour, shop_id, short_service_name, worker_id, start_timestamp, end_timestamp) VALUES (9, 'Engine cleaning','800', 0,'30-Sep-2022',1, '17:00', 1, 'Engine cleaning', 1, '2022-09-30 17:00:00.0', '2022-09-30 18:00:00.0');

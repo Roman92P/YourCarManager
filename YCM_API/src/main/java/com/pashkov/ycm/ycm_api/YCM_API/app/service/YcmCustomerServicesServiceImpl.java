@@ -6,10 +6,15 @@ import com.pashkov.ycm.ycm_api.YCM_API.app.exceptions.CustomerAppointmentAlready
 import com.pashkov.ycm.ycm_api.YCM_API.app.exceptions.DateHourForSelectedServiceIsNotAvailable;
 import com.pashkov.ycm.ycm_api.YCM_API.app.exceptions.SelectedServiceIsNotAvailableInThisShop;
 import com.pashkov.ycm.ycm_api.YCM_API.app.repository.YcmCustomerServicesRepository;
+import com.pashkov.ycm.ycm_api.YCM_API.app.util.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,6 +24,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesService {
+    @Autowired
+    YcmWorkerOccupiedHoursService ycmWorkerOccupiedHoursService;
     @Autowired
     YcmUserCustomerService ycmUserCustomerService;
     @Autowired
@@ -70,6 +77,7 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
     }
 
     @Override
+    @Transactional
     public YcmCustomerService scheduleNewAppointment
             (String nick, YcmCustomerNewAppointmentDTO ycmCustomerNewAppointmentDTO) {
         Optional<YcmCustomer> ycmCustomerByNick = ycmUserCustomerService.getYcmCustomerByNick(nick);
@@ -99,21 +107,62 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
         //check if shop have available worker for chosen service
         ServiceEnum serviceType = ycmCustomerNewService.getServiceType();
         Set<YcmShopWorker> allShopWorkersWithNeededSpecialization = ycmShopService.getAllShopWorkersWithNeededSpecialization(ycmCustomerNewService.getYcmShop().getNick(), serviceType);
+        Set<YcmShopWorker> readyToWork = filterWorkersNotBusy(allShopWorkersWithNeededSpecialization, ycmCustomerNewService.getStartTimestamp(), ycmCustomerNewService.getEndTimestamp());
 
-        Set<YcmShopWorker> readyToWork = filterWorkersNotBussy(allShopWorkersWithNeededSpecialization, ycmCustomerNewService.getStartTimestamp(), ycmCustomerNewService.getEndTimestamp());
-
+        System.out.println(readyToWork);
         if (dateForServiceInShopIsNotAvailable(ycmCustomerNewService.getYcmShop().getId(),
                 ycmCustomerNewService.getShortServiceName(),
-                ycmCustomerNewService.getServiceAppointmentDay(), ycmCustomerNewService.getServiceHour())) {
+                ycmCustomerNewService.getServiceAppointmentDay(), ycmCustomerNewService.getServiceHour()) || readyToWork.isEmpty()) {
             throw new DateHourForSelectedServiceIsNotAvailable("Select another day or/and time");
         }
-
+        YcmShopWorker worker = readyToWork.iterator().next();
+        ycmCustomerNewService.setYcmShopWorker(worker);
         ycmCustomerServicesRepository.save(ycmCustomerNewService);
+        YcmWorkerOccupiedHours hours = new YcmWorkerOccupiedHours();
+        hours.setYcmShopWorker(worker);
+        hours.setYcmCustomerService(ycmCustomerNewService);
+        ycmWorkerOccupiedHoursService.save(hours);
         return ycmCustomerNewService;
     }
 
-    private Set<YcmShopWorker> filterWorkersNotBussy(Set<YcmShopWorker> allShopWorkersWithNeededSpecialization, String startTimestamp, String endTimestamp) {
-        return null;
+    private Set<YcmShopWorker> filterWorkersNotBusy(Set<YcmShopWorker> allShopWorkersWithNeededSpecialization, String startTimestamp, String endTimestamp) {
+
+        LocalDateTime startTimeOfNewWork = LocalDateTime.parse(startTimestamp, DateTimeFormatter.ofPattern(Const.DATE_TIME_PARSE_FORMAT));
+        LocalDateTime endTimeOfNewWork = LocalDateTime.parse(endTimestamp, DateTimeFormatter.ofPattern(Const.DATE_TIME_PARSE_FORMAT));
+        Set<YcmShopWorker> filteredWorkers = new HashSet<>();
+        for (YcmShopWorker ycmShopWorker : allShopWorkersWithNeededSpecialization) {
+            if (workerIsAvailable(startTimeOfNewWork, endTimeOfNewWork, ycmShopWorker.getYcmWorkerOccupiedHours())) {
+                filteredWorkers.add(ycmShopWorker);
+            }
+        }
+        return filteredWorkers;
+    }
+
+    private boolean workerIsAvailable(LocalDateTime startTimeOfNewWork, LocalDateTime endTimeOfNewWork, List<YcmWorkerOccupiedHours> ycmWorkerOccupiedHours) {
+        List<LocalDateTime> allWorkTiming = new ArrayList<>();
+        for (YcmWorkerOccupiedHours work : ycmWorkerOccupiedHours) {
+            allWorkTiming.add(LocalDateTime.parse(work.getYcmCustomerService().getStartTimestamp(), DateTimeFormatter.ofPattern(Const.DATE_TIME_PARSE_FORMAT)));
+            allWorkTiming.add(LocalDateTime.parse(work.getYcmCustomerService().getEndTimestamp(), DateTimeFormatter.ofPattern(Const.DATE_TIME_PARSE_FORMAT)));
+        }
+        for (int i = 0; i < allWorkTiming.size(); i = i+2) {
+            LocalDateTime existingWorkStart = allWorkTiming.get(i);
+            LocalDateTime existingWorkEnd = allWorkTiming.get(i + 1);
+//            if (startTimeOfNewWork.isAfter(existingWorkStart) && endTimeOfNewWork.isBefore(existingWorkEnd)) {
+//                return false;
+//            }
+//            if (startTimeOfNewWork.isBefore(existingWorkStart) && endTimeOfNewWork.isAfter(existingWorkStart)) {
+//                return false;
+//            }
+            if (startTimeOfNewWork.isAfter(existingWorkStart) && startTimeOfNewWork.isBefore(existingWorkEnd)) {
+                System.out.println("Start between existing");
+                return false;
+            }
+            if (endTimeOfNewWork.isAfter(existingWorkStart) && endTimeOfNewWork.isBefore(existingWorkEnd)) {
+                System.out.println("Ends between existing");
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
