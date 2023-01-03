@@ -106,10 +106,10 @@ public class YcmUserCustomerResource {
         return ResponseEntity.ok(ycmCustomerServiceRepresentationModelAssembler.toModel(newCustomerAppointment));
     }
 
-    @ExceptionHandler ({CustomerAppointmentAlreadyScheduledException.class})
-    public ResponseEntity handleDuplicateServiceSchedulingException() {
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler ({CustomerAppointmentAlreadyScheduledException.class})
+//    public ResponseEntity handleDuplicateServiceSchedulingException() {
+//        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//    }
 //{
 //        "shopName":"ONE SHOP",
 //        "ycmShopServiceEntity" :

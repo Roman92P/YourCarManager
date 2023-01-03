@@ -147,12 +147,6 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
         for (int i = 0; i < allWorkTiming.size(); i = i+2) {
             LocalDateTime existingWorkStart = allWorkTiming.get(i);
             LocalDateTime existingWorkEnd = allWorkTiming.get(i + 1);
-//            if (startTimeOfNewWork.isAfter(existingWorkStart) && endTimeOfNewWork.isBefore(existingWorkEnd)) {
-//                return false;
-//            }
-//            if (startTimeOfNewWork.isBefore(existingWorkStart) && endTimeOfNewWork.isAfter(existingWorkStart)) {
-//                return false;
-//            }
             if (startTimeOfNewWork.isAfter(existingWorkStart) && startTimeOfNewWork.isBefore(existingWorkEnd)) {
                 System.out.println("Start between existing");
                 return false;
