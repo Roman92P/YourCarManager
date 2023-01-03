@@ -29,17 +29,17 @@ public class CustomerAppointmentToYcmCustomerServiceMapper {
     public YcmCustomerService mapCustomerAppointmentDtoToYcmCustomerService
             (YcmCustomerNewAppointmentDTO ycmCustomerNewAppointmentDTO, YcmCustomer ycmCustomer) {
         if (ycmCustomer == null) {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException("Ycm Customer is null");
         }
 
         String shopName = ycmCustomerNewAppointmentDTO.getShopName();
         Optional<YcmShop> shopByName = ycmShopService.getShopByName(shopName);
         if (!shopByName.isPresent()) {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException("Unknown shop name");
         }
         Optional<YcmShopServiceEntity> serviceOptional = ycmShopServicesService.getShopServiceByServiceShortName(ycmCustomerNewAppointmentDTO.getYcmShopShortServiceName(), shopByName.get().getId());
         if (!serviceOptional.isPresent()) {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException("Unknown service name");
         }
         YcmShopServiceEntity ycmShopServiceEntity = serviceOptional.get();
         String timingHours = ycmShopServiceEntity.getTimingHours();

@@ -82,7 +82,7 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
             (String nick, YcmCustomerNewAppointmentDTO ycmCustomerNewAppointmentDTO) {
         Optional<YcmCustomer> ycmCustomerByNick = ycmUserCustomerService.getYcmCustomerByNick(nick);
         if (!ycmCustomerByNick.isPresent()) {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException("Ycm Customer not found. Please check your request!");
         }
         YcmCustomer ycmCustomer = ycmCustomerByNick.get();
         YcmCustomerService ycmCustomerNewService =
@@ -97,11 +97,11 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
             }
         }
         if (throwDuplicate) {
-            throw new CustomerAppointmentAlreadyScheduledException(String.format("Appointment in %s for %s already in your calender",
+            throw new CustomerAppointmentAlreadyScheduledException(String.format("Appointment in %s for %s already in your calender!",
                     ycmCustomerNewService.getYcmShop().getShopName(), ycmCustomerNewService.getStartTimestamp()));
         }
         if (!ycmShopServicesService.selectedServiceIsAvailableInSelectedShop(ycmCustomerNewService)) {
-            throw new SelectedServiceIsNotAvailableInThisShop("Selected service is not available");
+            throw new EntityNotFoundException("Selected service is not available");
         }
 
         //check if shop have available worker for chosen service
