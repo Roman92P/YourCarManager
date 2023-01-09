@@ -53,7 +53,7 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
     }
 
     @Override
-    public Optional<YcmCustomerService> getParticulaCustomerService(String nick, String serviceDay, String serviceHour) {
+    public Optional<YcmCustomerService> getParticularCustomerService(String nick, String serviceDay, String serviceHour) {
         return ycmCustomerServicesRepository.findCustomerServiceByDate(nick, serviceDay, serviceHour);
     }
 
@@ -109,7 +109,6 @@ public class YcmCustomerServicesServiceImpl implements YcmCustomerServicesServic
         Set<YcmShopWorker> allShopWorkersWithNeededSpecialization = ycmShopService.getAllShopWorkersWithNeededSpecialization(ycmCustomerNewService.getYcmShop().getNick(), serviceType);
         Set<YcmShopWorker> readyToWork = filterWorkersNotBusy(allShopWorkersWithNeededSpecialization, ycmCustomerNewService.getStartTimestamp(), ycmCustomerNewService.getEndTimestamp());
 
-        System.out.println(readyToWork);
         if (dateForServiceInShopIsNotAvailable(ycmCustomerNewService.getYcmShop().getId(),
                 ycmCustomerNewService.getShortServiceName(),
                 ycmCustomerNewService.getServiceAppointmentDay(), ycmCustomerNewService.getServiceHour()) || readyToWork.isEmpty()) {

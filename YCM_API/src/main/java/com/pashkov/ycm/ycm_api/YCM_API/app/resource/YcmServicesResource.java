@@ -27,9 +27,6 @@ public class YcmServicesResource {
     @ResponseBody
     public ResponseEntity<YcmShopServiceEntity> getYcmServiceById(@PathVariable Long id) {
         Optional<YcmShopServiceEntity> shopServiceByServiceId = ycmShopServicesService.getShopServiceByServiceId(id);
-        if(!shopServiceByServiceId.isPresent()) {
-            return  ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(shopServiceByServiceId.get());
+        return shopServiceByServiceId.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

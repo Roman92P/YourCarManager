@@ -11,10 +11,16 @@ public class CustomerAppointmentAlreadyScheduledException extends RuntimeExcepti
     public CustomerAppointmentAlreadyScheduledException(String errorMessage) {
         super(errorMessage);
     }
+
     public CustomerAppointmentAlreadyScheduledException(String... errorMessage) {
         super(String.join(",", errorMessage));
     }
+
     public CustomerAppointmentAlreadyScheduledException(String errorMessage, Throwable err) {
         super(errorMessage, err);
+    }
+
+    public CustomerAppointmentAlreadyScheduledException(){
+        super();
     }
 }

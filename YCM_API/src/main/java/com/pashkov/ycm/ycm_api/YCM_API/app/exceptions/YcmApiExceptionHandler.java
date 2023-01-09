@@ -20,9 +20,9 @@ public class YcmApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    @ExceptionHandler(value = {CustomerAppointmentAlreadyScheduledException.class})
+    @ExceptionHandler(value = {CustomerAppointmentAlreadyScheduledException.class, DateHourForSelectedServiceIsNotAvailable.class})
     protected ApiError handleCustomerAppointmentAlreadyScheduledException
-            (CustomerAppointmentAlreadyScheduledException ex, WebRequest request) {
+            (Exception ex) {
         return new ApiError(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), String.valueOf(HttpStatus.BAD_REQUEST));
     }
 

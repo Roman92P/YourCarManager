@@ -1,13 +1,11 @@
 package com.pashkov.ycm.ycm_api.YCM_API.app.resource;
 
 import com.pashkov.ycm.ycm_api.YCM_API.app.entity.*;
-import com.pashkov.ycm.ycm_api.YCM_API.app.exceptions.CustomerAppointmentAlreadyScheduledException;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmAddressService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmCustomerServicesService;
 import com.pashkov.ycm.ycm_api.YCM_API.app.service.YcmUserCustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -78,7 +76,7 @@ public class YcmUserCustomerResource {
     @GetMapping(path = "/{nick}/services/{serviceDay}/{serviceHour}")
     @ResponseBody
     public ResponseEntity<YcmCustomerServiceModel> getParticularCustomerService(@PathVariable String nick, @PathVariable String serviceDay, @PathVariable String serviceHour) {
-        Optional<YcmCustomerService> particularCustomerService = ycmCustomerServicesService.getParticulaCustomerService(nick, serviceDay, serviceHour);
+        Optional<YcmCustomerService> particularCustomerService = ycmCustomerServicesService.getParticularCustomerService(nick, serviceDay, serviceHour);
         return particularCustomerService.map(ycmCustomerService -> ResponseEntity.ok(ycmCustomerServiceRepresentationModelAssembler.toModel(ycmCustomerService))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -88,7 +86,7 @@ public class YcmUserCustomerResource {
                                                                                    @PathVariable String serviceDay,
                                                                                    @PathVariable String serviceHour) {
         Optional<YcmCustomerService> particularCustomerService = ycmCustomerServicesService
-                .getParticulaCustomerService(nick, serviceDay, serviceHour);
+                .getParticularCustomerService(nick, serviceDay, serviceHour);
         if (!particularCustomerService.isPresent()) {
             return ResponseEntity.notFound().build();
         }
