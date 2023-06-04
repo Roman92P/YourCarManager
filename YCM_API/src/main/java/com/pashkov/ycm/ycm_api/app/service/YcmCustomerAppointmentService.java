@@ -26,4 +26,6 @@ public interface YcmCustomerAppointmentService {
     YcmCustomerAppointment scheduleNewAppointment(String nick, YcmCustomerNewAppointmentDTO ycmCustomerNewAppointmentDTO);
 
     boolean dateForServiceInShopIsNotAvailable(long shopId, String shortServiceName, String serviceDay, String serviceHour);
+
+    List<YcmCustomerAppointment> getShopAppointmentsForCurrentMonth(String shopName);
 }

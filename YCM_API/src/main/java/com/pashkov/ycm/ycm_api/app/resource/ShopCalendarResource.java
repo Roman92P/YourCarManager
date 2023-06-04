@@ -39,11 +39,13 @@ public class ShopCalendarResource {
         return ResponseEntity.ok(ycmCustomerAppointmentModels);
     }
 
-    @GetMapping(path = "/{shopName}/calendar/{month}", produces = "application/json")
+    @GetMapping(path = "/{shopName}/calendar/currentMonth", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<Object> getCurrentMonthShopCalendar(@PathVariable String shopName, @PathVariable String month) {
-        YcmShop shopByName = ycmShopService.getShopByName(shopName);
-        return null;
+    public ResponseEntity<List<YcmCustomerAppointmentModel>> getCurrentMonthShopCalendar(@PathVariable String shopName) {
+        List<YcmCustomerAppointmentModel> shopsAppointmentsForCurrentMonth  = ycmCustomerAppointmentService.getShopAppointmentsForCurrentMonth(shopName).stream()
+                .map(ycmCustomerServiceRepresentationModelAssembler::toModel)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(shopsAppointmentsForCurrentMonth);
     }
 
     @PostMapping(path = "/{shopName}/calendar", consumes = "application/json", produces = "application/json")

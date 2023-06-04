@@ -141,7 +141,7 @@ public class YcmCustomerAppointmentServiceImpl implements YcmCustomerAppointment
             allWorkTiming.add(LocalDateTime.parse(work.getYcmCustomerAppointment().getStartTimestamp(), DateTimeFormatter.ofPattern(Const.DATE_TIME_PARSE_FORMAT)));
             allWorkTiming.add(LocalDateTime.parse(work.getYcmCustomerAppointment().getEndTimestamp(), DateTimeFormatter.ofPattern(Const.DATE_TIME_PARSE_FORMAT)));
         }
-        for (int i = 0; i < allWorkTiming.size(); i = i+2) {
+        for (int i = 0; i < allWorkTiming.size(); i = i + 2) {
             LocalDateTime existingWorkStart = allWorkTiming.get(i);
             LocalDateTime existingWorkEnd = allWorkTiming.get(i + 1);
             if (startTimeOfNewWork.isAfter(existingWorkStart) && startTimeOfNewWork.isBefore(existingWorkEnd)) {
@@ -159,5 +159,12 @@ public class YcmCustomerAppointmentServiceImpl implements YcmCustomerAppointment
     @Override
     public boolean dateForServiceInShopIsNotAvailable(long shopId, String shortServiceName, String serviceDay, String serviceHour) {
         return ycmCustomerAppointmentRepository.existsByShopIdShortServiceNameAndDate(shopId, shortServiceName, serviceDay, serviceHour);
+    }
+
+    @Override
+    public List<YcmCustomerAppointment> getShopAppointmentsForCurrentMonth(String shopName) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM", Locale.ENGLISH);
+        String shortMonthName = LocalDateTime.now().format(formatter);
+        return ycmCustomerAppointmentRepository.findAllCustomerAppointmentsInShopForMonth(shopName, shortMonthName);
     }
 }
