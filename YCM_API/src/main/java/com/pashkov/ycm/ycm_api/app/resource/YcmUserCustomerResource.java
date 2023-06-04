@@ -66,7 +66,7 @@ public class YcmUserCustomerResource {
 
     @GetMapping(path = "/{nick}/services", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<CollectionModel<YcmCustomerServiceModel>> returnUserScheduledServices(@PathVariable String nick) {
+    public ResponseEntity<CollectionModel<YcmCustomerAppointmentModel>> returnUserScheduledServices(@PathVariable String nick) {
         YcmCustomer ycmCustomer = ycmUserCustomerService.getYcmCustomerByNick(nick).orElseThrow(EntityNotFoundException::new);
         long id = ycmCustomer.getId();
         List<YcmCustomerAppointment> ycmCustomerAppointments = ycmCustomerAppointmentService.getYcmCustomerServices(id);
@@ -76,16 +76,16 @@ public class YcmUserCustomerResource {
 
     @GetMapping(path = "/{nick}/services/{serviceDay}/{serviceHour}")
     @ResponseBody
-    public ResponseEntity<YcmCustomerServiceModel> getParticularCustomerService(@PathVariable String nick, @PathVariable String serviceDay, @PathVariable String serviceHour) {
+    public ResponseEntity<YcmCustomerAppointmentModel> getParticularCustomerService(@PathVariable String nick, @PathVariable String serviceDay, @PathVariable String serviceHour) {
         Optional<YcmCustomerAppointment> particularCustomerService = ycmCustomerAppointmentService.getParticularCustomerService(nick, serviceDay, serviceHour);
         return particularCustomerService.map(ycmCustomerService -> ResponseEntity.ok(ycmCustomerServiceRepresentationModelAssembler.toModel(ycmCustomerService))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping(path = "/{nick}/services/{serviceDay}/{serviceHour}")
     @ResponseBody
-    public ResponseEntity<YcmCustomerServiceModel> removeParticularCustomerService(@PathVariable String nick,
-                                                                                   @PathVariable String serviceDay,
-                                                                                   @PathVariable String serviceHour) {
+    public ResponseEntity<YcmCustomerAppointmentModel> removeParticularCustomerService(@PathVariable String nick,
+                                                                                       @PathVariable String serviceDay,
+                                                                                       @PathVariable String serviceHour) {
         Optional<YcmCustomerAppointment> particularCustomerService = ycmCustomerAppointmentService
                 .getParticularCustomerService(nick, serviceDay, serviceHour);
         if (!particularCustomerService.isPresent()) {
@@ -97,7 +97,7 @@ public class YcmUserCustomerResource {
 
     @PostMapping(path = "/{nick}/services", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<YcmCustomerServiceModel> scheduleNewShopServiceAppointment(
+    public ResponseEntity<YcmCustomerAppointmentModel> scheduleNewShopServiceAppointment(
             @Validated @RequestBody YcmCustomerNewAppointmentDTO ycmCustomerNewAppointmentDTO,
             @PathVariable String nick) {
         YcmCustomerAppointment newCustomerAppointment = ycmCustomerAppointmentService

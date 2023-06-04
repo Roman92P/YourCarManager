@@ -59,7 +59,7 @@ public class YcmCustomerAppointmentServiceImpl implements YcmCustomerAppointment
     public void removeCustomerService(String nick, String serviceDay, String serviceHour) {
         YcmCustomer ycmCustomer = ycmUserCustomerService.getYcmCustomerByNick(nick).orElseThrow(EntityNotFoundException::new);
         YcmCustomerAppointment ycmCustomerAppointment = ycmCustomerAppointmentRepository.findCustomerServiceByDate(nick, serviceDay, serviceHour).orElseThrow(EntityNotFoundException::new);
-        ycmCustomerAppointment.setYcmCustomerPurchaseService(ycmCustomer);
+        ycmCustomerAppointment.setYcmCustomer(ycmCustomer);
         ycmCustomerAppointmentRepository.deleteById(ycmCustomerAppointment.getId());
     }
 

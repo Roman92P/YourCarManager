@@ -3,6 +3,7 @@ package com.pashkov.ycm.ycm_api.app.service;
 import com.pashkov.ycm.ycm_api.app.model.ServiceEnum;
 import com.pashkov.ycm.ycm_api.app.model.YcmShop;
 import com.pashkov.ycm.ycm_api.app.model.YcmShopWorker;
+import com.pashkov.ycm.ycm_api.app.repository.YcmCustomerAppointmentRepository;
 import com.pashkov.ycm.ycm_api.app.repository.YcmShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class YcmShopServiceImpl implements YcmShopService{
     @Autowired
     YcmShopWorkerService ycmShopWorkerService;
 
+    @Autowired
+    YcmCustomerAppointmentRepository ycmCustomerAppointmentRepository;
+
     @Override
     public YcmShop getShopById(long shopId) {
         return ycmShopRepository.findById(shopId).orElseThrow(EntityNotFoundException::new);
@@ -36,9 +40,11 @@ public class YcmShopServiceImpl implements YcmShopService{
     @Override
     public YcmShop getShopByName(String shopName) {
         Optional<YcmShop> ycmShopByShopNameIs = ycmShopRepository.getYcmShopByShopNameIs(shopName);
-        return ycmShopByShopNameIs.orElseThrow(() -> {
+        YcmShop ycmShop = ycmShopByShopNameIs.orElseThrow(() -> {
             return new EntityNotFoundException("Could not found such YCM Shop");
         });
+//        ycmShop.setCustomerAppointments(ycmCustomerAppointmentRepository.findAllByYcmShop_ShopName(shopName));
+        return ycmShop;
     }
 
     @Override

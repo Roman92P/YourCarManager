@@ -16,7 +16,7 @@ import org.springframework.hateoas.RepresentationModel;
 @EqualsAndHashCode(callSuper = false)
 @JsonRootName(value = "YcmCustomerService")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class YcmCustomerServiceModel  extends RepresentationModel<YcmCustomerServiceModel> {
+public class YcmCustomerAppointmentModel extends RepresentationModel<YcmCustomerAppointmentModel> {
 
     @JsonProperty
     private ServiceEnum serviceType;
@@ -37,10 +37,10 @@ public class YcmCustomerServiceModel  extends RepresentationModel<YcmCustomerSer
     private String serviceHour;
 
     @JsonProperty
-    private YcmCustomerModel ycmCustomerPurchaseService;
+    private YcmCustomerModel ycmCustomer;
 
     @JsonProperty
-    private YcmShop ycmShop;
+    private String ycmShopName;
 
     @JsonProperty
     private String shortServiceName;

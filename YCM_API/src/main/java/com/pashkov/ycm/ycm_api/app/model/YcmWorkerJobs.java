@@ -3,6 +3,7 @@ package com.pashkov.ycm.ycm_api.app.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Roman Pashkov created on 26.12.2022 inside the package - com.pashkov.ycm.ycm_api.YCM_API.app.entity
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "YcmWorkerJobs")
-public class YcmWorkerJobs {
+public class YcmWorkerJobs implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

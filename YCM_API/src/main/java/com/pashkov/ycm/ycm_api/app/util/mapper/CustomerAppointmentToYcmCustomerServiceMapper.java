@@ -56,7 +56,7 @@ public class CustomerAppointmentToYcmCustomerServiceMapper {
         LocalDateTime localDateTime1 = localDateTime.plusSeconds(durationInSeconds);
         Timestamp endTimestamp = Timestamp.valueOf(localDateTime1);
         YcmCustomerAppointment ycmCustomerAppointment = new YcmCustomerAppointment();
-        ycmCustomerAppointment.setYcmCustomerPurchaseService(ycmCustomer);
+        ycmCustomerAppointment.setYcmCustomer(ycmCustomer);
         ycmCustomerAppointment.setYcmShop(shopByName);
         ycmCustomerAppointment.setServiceHour(serviceAppointmentHour);
         ycmCustomerAppointment.setServiceAppointmentDay(serviceAppointmentDay);

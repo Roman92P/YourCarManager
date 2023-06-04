@@ -3,6 +3,7 @@ package com.pashkov.ycm.ycm_api.app.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  */
 @Data
 @Entity
-public class YcmShopWorker {
+public class YcmShopWorker implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

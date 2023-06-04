@@ -1,5 +1,6 @@
 package com.pashkov.ycm.ycm_api.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,10 +12,8 @@ import java.util.Objects;
  * Roman Pashkov created on 10.07.2022 inside the package - com.pashkov.ycm.ycm_api.YCM_API.app.entity
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "ycmcustomerappointment")
-//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class YcmCustomerAppointment extends YcmService implements Serializable {
 
     @Id
@@ -27,13 +26,13 @@ public class YcmCustomerAppointment extends YcmService implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ycmcustomer_id")
-    private YcmCustomer ycmCustomerPurchaseService;
+    private YcmCustomer ycmCustomer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id")
     private YcmShop ycmShop;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "worker_id")
     private YcmShopWorker ycmShopWorker;
 
@@ -50,11 +49,11 @@ public class YcmCustomerAppointment extends YcmService implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         YcmCustomerAppointment that = (YcmCustomerAppointment) o;
-        return startTimestamp.equals(that.startTimestamp) && ycmCustomerPurchaseService.getId() == that.ycmCustomerPurchaseService.getId() && ycmShop.getId() == that.ycmShop.getId();
+        return startTimestamp.equals(that.startTimestamp) && ycmCustomer.getId() == that.ycmCustomer.getId() && ycmShop.getId() == that.ycmShop.getId();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), serviceAppointmentDay, serviceHour, startTimestamp, endTimestamp, ycmCustomerPurchaseService, ycmShop);
+        return Objects.hash(super.hashCode(), serviceAppointmentDay, serviceHour, startTimestamp, endTimestamp, ycmCustomer, ycmShop);
     }
 }

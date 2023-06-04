@@ -15,10 +15,10 @@ import java.util.Optional;
 @RepositoryRestResource
 public interface YcmCustomerAppointmentRepository extends CrudRepository<YcmCustomerAppointment, Long> {
 
-    @Query("select s from YcmCustomerAppointment s where s.ycmCustomerPurchaseService.id = ?1")
+    @Query("select s from YcmCustomerAppointment s where s.ycmCustomer.id = ?1")
     List<YcmCustomerAppointment> findAllYcmCustomerService(@Param("customerId") Long customerId);
 
-    @Query("select s from  YcmCustomerAppointment s where s.ycmCustomerPurchaseService.nick = ?1 and  s.serviceAppointmentDay = ?2 and  s.serviceHour = ?3")
+    @Query("select s from  YcmCustomerAppointment s where s.ycmCustomer.nick = ?1 and  s.serviceAppointmentDay = ?2 and  s.serviceHour = ?3")
     Optional<YcmCustomerAppointment> findCustomerServiceByDate(String nick, String serviceDay, String serviceHour1);
 
     List<YcmCustomerAppointment> findAllByYcmShop_ShopName(String shopName);

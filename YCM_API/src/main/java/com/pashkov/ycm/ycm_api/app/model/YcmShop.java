@@ -1,7 +1,11 @@
 package com.pashkov.ycm.ycm_api.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.xml.internal.ws.developer.Serialization;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.bytebuddy.implementation.bind.annotation.Empty;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +21,7 @@ import java.util.List;
 public class YcmShop extends YcmUser implements Serializable {
 
     private String shopName;
+
     @Column(nullable = true)
     @ManyToMany
     @JoinTable(name = "Shop_Services",
@@ -25,8 +30,8 @@ public class YcmShop extends YcmUser implements Serializable {
     )
     private List<YcmShopProductEntity> services;
 
-    @OneToMany(mappedBy = "ycmShop", fetch = FetchType.LAZY)
-    private List<YcmCustomerAppointment> customerAppointments;
+//    @OneToMany(mappedBy = "ycmShop", fetch = FetchType.LAZY)
+//    private List<YcmCustomerAppointment> customerAppointments;
 
     @Override
     public String toString() {

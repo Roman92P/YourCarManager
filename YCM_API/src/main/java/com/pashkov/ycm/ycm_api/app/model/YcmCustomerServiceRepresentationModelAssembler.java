@@ -7,34 +7,34 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.stereotype.Component;
 
 @Component
-public class YcmCustomerServiceRepresentationModelAssembler extends RepresentationModelAssemblerSupport<YcmCustomerAppointment, YcmCustomerServiceModel> {
+public class YcmCustomerServiceRepresentationModelAssembler extends RepresentationModelAssemblerSupport<YcmCustomerAppointment, YcmCustomerAppointmentModel> {
 
     @Autowired
     private YcmCustomerRepresentationModelAssembler ycmCustomerRepresentationModelAssembler;
 
     public YcmCustomerServiceRepresentationModelAssembler() {
-        super(YcmUserCustomerResource.class, YcmCustomerServiceModel.class);
+        super(YcmUserCustomerResource.class, YcmCustomerAppointmentModel.class);
     }
 
     @Override
-    public YcmCustomerServiceModel toModel(YcmCustomerAppointment entity) {
-        YcmCustomerServiceModel ycmCustomerServiceModel = instantiateModel(entity);
-        ycmCustomerServiceModel.setServiceType(entity.getServiceType());
-        ycmCustomerServiceModel.setServiceDescription(entity.getServiceDescription());
-        ycmCustomerServiceModel.setServicePrice(entity.getServicePrice());
-        ycmCustomerServiceModel.setCurrency(entity.getCurrency());
-        ycmCustomerServiceModel.setServiceAppointmentDay(entity.getServiceAppointmentDay());
-        ycmCustomerServiceModel.setServiceHour(entity.getServiceHour());
-        YcmCustomerModel ycmCustomerModel = ycmCustomerRepresentationModelAssembler.toModel(entity.getYcmCustomerPurchaseService());
-        ycmCustomerServiceModel.setYcmCustomerPurchaseService(ycmCustomerModel);
-        ycmCustomerServiceModel.setYcmShop(entity.getYcmShop());
-        ycmCustomerServiceModel.setShortServiceName(entity.getShortServiceName());
-        return ycmCustomerServiceModel;
+    public YcmCustomerAppointmentModel toModel(YcmCustomerAppointment entity) {
+        YcmCustomerAppointmentModel ycmCustomerAppointmentModel = instantiateModel(entity);
+        ycmCustomerAppointmentModel.setServiceType(entity.getServiceType());
+        ycmCustomerAppointmentModel.setServiceDescription(entity.getServiceDescription());
+        ycmCustomerAppointmentModel.setServicePrice(entity.getServicePrice());
+        ycmCustomerAppointmentModel.setCurrency(entity.getCurrency());
+        ycmCustomerAppointmentModel.setServiceAppointmentDay(entity.getServiceAppointmentDay());
+        ycmCustomerAppointmentModel.setServiceHour(entity.getServiceHour());
+        YcmCustomerModel ycmCustomerModel = ycmCustomerRepresentationModelAssembler.toModel(entity.getYcmCustomer());
+        ycmCustomerAppointmentModel.setYcmCustomer(ycmCustomerModel);
+        ycmCustomerAppointmentModel.setYcmShopName(entity.getYcmShop().getShopName());
+        ycmCustomerAppointmentModel.setShortServiceName(entity.getShortServiceName());
+        return ycmCustomerAppointmentModel;
     }
 
     @Override
-    public CollectionModel<YcmCustomerServiceModel> toCollectionModel(Iterable<? extends YcmCustomerAppointment> entities) {
-        CollectionModel<YcmCustomerServiceModel> ycmCustomerServiceModels = super.toCollectionModel(entities);
+    public CollectionModel<YcmCustomerAppointmentModel> toCollectionModel(Iterable<? extends YcmCustomerAppointment> entities) {
+        CollectionModel<YcmCustomerAppointmentModel> ycmCustomerServiceModels = super.toCollectionModel(entities);
         return ycmCustomerServiceModels;
     }
 }
