@@ -48,6 +48,15 @@ public class ShopCalendarResource {
         return ResponseEntity.ok(shopsAppointmentsForCurrentMonth);
     }
 
+    @GetMapping(path = "/{shopName}/calendar/{appointmentTimestamp}", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<List<YcmCustomerAppointmentModel>> getAppointmentsForDay(@PathVariable String shopName, @PathVariable String appointmentTimestamp) {
+        List<YcmCustomerAppointment> result = ycmCustomerAppointmentService.getAllShopAppointmentsInSpecificDay(shopName, appointmentTimestamp);
+        List<YcmCustomerAppointmentModel> mappedResult = result.stream().map(ycmCustomerServiceRepresentationModelAssembler::toModel)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(mappedResult);
+    }
+
     @PostMapping(path = "/{shopName}/calendar", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> addNewUserServiceAppointmentToCalendar (@RequestBody YcmCustomerAppointment ycmCustomerAppointment) {

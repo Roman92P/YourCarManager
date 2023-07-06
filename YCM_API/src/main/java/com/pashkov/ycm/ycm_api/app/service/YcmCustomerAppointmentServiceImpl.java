@@ -167,4 +167,9 @@ public class YcmCustomerAppointmentServiceImpl implements YcmCustomerAppointment
         String shortMonthName = LocalDateTime.now().format(formatter);
         return ycmCustomerAppointmentRepository.findAllCustomerAppointmentsInShopForMonth(shopName, shortMonthName);
     }
+
+    @Override
+    public List<YcmCustomerAppointment> getAllShopAppointmentsInSpecificDay(String shopName, String appointmentDay) {
+        return ycmCustomerAppointmentRepository.findAllByServiceAppointmentDay(shopName, appointmentDay);
+    }
 }

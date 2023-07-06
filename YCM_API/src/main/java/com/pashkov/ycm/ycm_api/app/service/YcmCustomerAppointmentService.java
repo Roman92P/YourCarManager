@@ -2,6 +2,7 @@ package com.pashkov.ycm.ycm_api.app.service;
 
 import com.pashkov.ycm.ycm_api.app.model.To.YcmCustomerNewAppointmentDTO;
 import com.pashkov.ycm.ycm_api.app.model.YcmCustomerAppointment;
+import com.pashkov.ycm.ycm_api.app.model.YcmCustomerAppointmentModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,4 +29,6 @@ public interface YcmCustomerAppointmentService {
     boolean dateForServiceInShopIsNotAvailable(long shopId, String shortServiceName, String serviceDay, String serviceHour);
 
     List<YcmCustomerAppointment> getShopAppointmentsForCurrentMonth(String shopName);
+
+    List<YcmCustomerAppointment> getAllShopAppointmentsInSpecificDay(String shopName, String appointmentTimestamp);
 }

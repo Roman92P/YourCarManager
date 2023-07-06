@@ -31,7 +31,6 @@ public interface YcmCustomerAppointmentRepository extends CrudRepository<YcmCust
     boolean existsByShopIdShortServiceNameAndDate(@Param("shopId") long shopId, @Param("shortServiceName") String shortServiceName,
                                                   @Param("day")String serviceDay, @Param("hour") String serviceHour);
 
-//    @Query(value = "SELECT CASE WHEN EXISTS ( SELECT * FROM YcmCustomerService  WHERE shop_id = :shopId  AND short_service_name = :shortServiceName AND service_appointment_day = :day AND service_hour = :hour) THEN 'TRUE' ELSE 'FALSE' END", nativeQuery = true)
-//    boolean existsByShopIdShortServiceNameAndDate(@Param("shopId") long shopId, @Param("shortServiceName") String shortServiceName,
-//                                                  @Param("day")String serviceDay, @Param("hour") String serviceHour);
+    @Query("select s from YcmCustomerAppointment s where s.ycmShop.shopName = ?1 and s.serviceAppointmentDay = ?2")
+    List<YcmCustomerAppointment> findAllByServiceAppointmentDay(String shopName, String day);
 }
