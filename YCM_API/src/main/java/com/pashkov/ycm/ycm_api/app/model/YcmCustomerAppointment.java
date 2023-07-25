@@ -32,7 +32,7 @@ public class YcmCustomerAppointment extends YcmService implements Serializable {
     @JoinColumn(name = "shop_id")
     private YcmShop ycmShop;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "worker_id")
     private YcmShopWorker ycmShopWorker;
 

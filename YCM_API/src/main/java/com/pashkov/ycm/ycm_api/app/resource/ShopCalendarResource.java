@@ -57,6 +57,7 @@ public class ShopCalendarResource {
         return ResponseEntity.ok(mappedResult);
     }
 
+    //To do: probably no need
     @PostMapping(path = "/{shopName}/calendar", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> addNewUserServiceAppointmentToCalendar (@RequestBody YcmCustomerAppointment ycmCustomerAppointment) {
@@ -65,7 +66,11 @@ public class ShopCalendarResource {
 
     @DeleteMapping(path = "/{shopName}/calendar", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<Object> removeUserServiceAppointmentFromShopCalendar(@RequestBody YcmCustomerAppointment ycmCustomerAppointment) {
-        return null;
+    public ResponseEntity<Object> removeUserServiceAppointmentFromShopCalendar(@RequestBody YcmCustomerAppointmentModel ycmCustomerAppointmentModel) {
+        String serviceAppointmentDay = ycmCustomerAppointmentModel.getServiceAppointmentDay();
+        String serviceHour = ycmCustomerAppointmentModel.getServiceHour();
+        String customerNick = ycmCustomerAppointmentModel.getYcmCustomer().getNick();
+        ycmCustomerAppointmentService.removeCustomerService(customerNick, serviceAppointmentDay, serviceHour);
+        return ResponseEntity.ok("Appointment removed!");
     }
 }

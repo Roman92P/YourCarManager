@@ -1,12 +1,13 @@
 package com.pashkov.ycm.ycm_api.app.service;
 
-import com.pashkov.ycm.ycm_api.app.model.*;
-import com.pashkov.ycm.ycm_api.app.model.To.YcmCustomerNewAppointmentDTO;
-import com.pashkov.ycm.ycm_api.app.util.mapper.CustomerAppointmentToYcmCustomerServiceMapper;
 import com.pashkov.ycm.ycm_api.app.exceptions.CustomerAppointmentAlreadyScheduledException;
 import com.pashkov.ycm.ycm_api.app.exceptions.DateHourForSelectedServiceIsNotAvailable;
+import com.pashkov.ycm.ycm_api.app.model.*;
+import com.pashkov.ycm.ycm_api.app.model.To.YcmCustomerNewAppointmentDTO;
 import com.pashkov.ycm.ycm_api.app.repository.YcmCustomerAppointmentRepository;
+import com.pashkov.ycm.ycm_api.app.repository.YcmWorkerOccupiedHoursRepository;
 import com.pashkov.ycm.ycm_api.app.util.Const;
+import com.pashkov.ycm.ycm_api.app.util.mapper.CustomerAppointmentToYcmCustomerServiceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.*;
 
 /**
@@ -34,6 +36,9 @@ public class YcmCustomerAppointmentServiceImpl implements YcmCustomerAppointment
     YcmShopProductService ycmShopProductService;
     @Autowired
     YcmShopService ycmShopService;
+
+    @Autowired
+    YcmWorkerOccupiedHoursRepository ycmWorkerOccupiedHoursRepository;
 
     @Override
     public List<YcmCustomerAppointment> getYcmCustomerServices(Long usedId) {
@@ -60,6 +65,13 @@ public class YcmCustomerAppointmentServiceImpl implements YcmCustomerAppointment
         YcmCustomer ycmCustomer = ycmUserCustomerService.getYcmCustomerByNick(nick).orElseThrow(EntityNotFoundException::new);
         YcmCustomerAppointment ycmCustomerAppointment = ycmCustomerAppointmentRepository.findCustomerServiceByDate(nick, serviceDay, serviceHour).orElseThrow(EntityNotFoundException::new);
         ycmCustomerAppointment.setYcmCustomer(ycmCustomer);
+        List<YcmWorkerJobs> ycmWorkerOccupiedHours = ycmCustomerAppointment.getYcmShopWorker().getYcmWorkerOccupiedHours();
+        YcmWorkerJobs ycmWorkerJobs1 = ycmWorkerOccupiedHours.stream()
+                .filter(ycmWorkerJobs -> ycmWorkerJobs.getYcmCustomerAppointment().getYcmCustomer().getNick().equals(ycmCustomer.getNick())
+                        && ycmWorkerJobs.getYcmCustomerAppointment().getServiceAppointmentDay().equals(serviceDay)
+                        && ycmWorkerJobs.getYcmCustomerAppointment().getServiceHour().equals(serviceHour))
+                .findAny().get();
+        ycmWorkerOccupiedHoursRepository.delete(ycmWorkerJobs1);
         ycmCustomerAppointmentRepository.deleteById(ycmCustomerAppointment.getId());
     }
 

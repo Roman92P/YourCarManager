@@ -40,11 +40,9 @@ public class YcmShopServiceImpl implements YcmShopService{
     @Override
     public YcmShop getShopByName(String shopName) {
         Optional<YcmShop> ycmShopByShopNameIs = ycmShopRepository.getYcmShopByShopNameIs(shopName);
-        YcmShop ycmShop = ycmShopByShopNameIs.orElseThrow(() -> {
+        return ycmShopByShopNameIs.orElseThrow(() -> {
             return new EntityNotFoundException("Could not found such YCM Shop");
         });
-//        ycmShop.setCustomerAppointments(ycmCustomerAppointmentRepository.findAllByYcmShop_ShopName(shopName));
-        return ycmShop;
     }
 
     @Override
