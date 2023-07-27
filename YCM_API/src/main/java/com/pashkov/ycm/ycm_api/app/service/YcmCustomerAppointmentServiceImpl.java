@@ -66,12 +66,12 @@ public class YcmCustomerAppointmentServiceImpl implements YcmCustomerAppointment
         YcmCustomerAppointment ycmCustomerAppointment = ycmCustomerAppointmentRepository.findCustomerServiceByDate(nick, serviceDay, serviceHour).orElseThrow(EntityNotFoundException::new);
         ycmCustomerAppointment.setYcmCustomer(ycmCustomer);
         List<YcmWorkerJobs> ycmWorkerOccupiedHours = ycmCustomerAppointment.getYcmShopWorker().getYcmWorkerOccupiedHours();
-        YcmWorkerJobs ycmWorkerJobs1 = ycmWorkerOccupiedHours.stream()
+        Optional<YcmWorkerJobs> optJob = ycmWorkerOccupiedHours.stream()
                 .filter(ycmWorkerJobs -> ycmWorkerJobs.getYcmCustomerAppointment().getYcmCustomer().getNick().equals(ycmCustomer.getNick())
                         && ycmWorkerJobs.getYcmCustomerAppointment().getServiceAppointmentDay().equals(serviceDay)
                         && ycmWorkerJobs.getYcmCustomerAppointment().getServiceHour().equals(serviceHour))
-                .findAny().get();
-        ycmWorkerOccupiedHoursRepository.delete(ycmWorkerJobs1);
+                .findAny();
+        optJob.ifPresent(ycmWorkerJobs -> ycmWorkerOccupiedHoursRepository.delete(ycmWorkerJobs));
         ycmCustomerAppointmentRepository.deleteById(ycmCustomerAppointment.getId());
     }
 
