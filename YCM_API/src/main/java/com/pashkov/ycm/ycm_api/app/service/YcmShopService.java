@@ -22,5 +22,5 @@ public interface YcmShopService {
 
     Optional<YcmShop> getShopByShopNick(String shopNick);
 
-    Set<YcmShopWorker> getAllShopWorkersWithNeededSpecialization(String shopNick , ServiceEnum serviceType);
+    Set<YcmShopWorker> getAllShopWorkersWithNeededSpecialization(String shopNick, ServiceEnum serviceType);
 }

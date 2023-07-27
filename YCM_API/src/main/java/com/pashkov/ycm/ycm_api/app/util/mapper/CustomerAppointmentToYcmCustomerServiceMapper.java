@@ -5,8 +5,8 @@ import com.pashkov.ycm.ycm_api.app.model.YcmCustomer;
 import com.pashkov.ycm.ycm_api.app.model.YcmCustomerAppointment;
 import com.pashkov.ycm.ycm_api.app.model.YcmShop;
 import com.pashkov.ycm.ycm_api.app.model.YcmShopProductEntity;
-import com.pashkov.ycm.ycm_api.app.service.YcmShopService;
 import com.pashkov.ycm.ycm_api.app.service.YcmShopProductService;
+import com.pashkov.ycm.ycm_api.app.service.YcmShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

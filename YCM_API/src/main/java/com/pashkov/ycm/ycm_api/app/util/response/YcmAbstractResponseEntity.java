@@ -5,5 +5,5 @@ package com.pashkov.ycm.ycm_api.app.util.response;
  */
 
 public abstract class YcmAbstractResponseEntity {
-    
+
 }

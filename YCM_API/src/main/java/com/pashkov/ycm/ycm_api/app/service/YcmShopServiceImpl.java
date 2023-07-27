@@ -16,7 +16,7 @@ import java.util.Set;
  * Roman Pashkov created on 28.07.2022 inside the package - com.pashkov.ycm.ycm_api.YCM_API.app.service
  */
 @Service
-public class YcmShopServiceImpl implements YcmShopService{
+public class YcmShopServiceImpl implements YcmShopService {
 
     @Autowired
     YcmShopRepository ycmShopRepository;

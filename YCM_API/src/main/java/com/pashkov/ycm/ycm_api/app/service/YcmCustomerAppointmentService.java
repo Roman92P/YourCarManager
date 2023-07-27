@@ -2,7 +2,6 @@ package com.pashkov.ycm.ycm_api.app.service;
 
 import com.pashkov.ycm.ycm_api.app.model.To.YcmCustomerNewAppointmentDTO;
 import com.pashkov.ycm.ycm_api.app.model.YcmCustomerAppointment;
-import com.pashkov.ycm.ycm_api.app.model.YcmCustomerAppointmentModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +13,7 @@ import java.util.Set;
 public interface YcmCustomerAppointmentService {
 
     List<YcmCustomerAppointment> getYcmCustomerServices(Long id);
+
     Set<YcmCustomerAppointment> getAllServices();
 
     Optional<YcmCustomerAppointment> getParticularCustomerService(String nick, String serviceDay, String serviceHour);
@@ -22,7 +22,7 @@ public interface YcmCustomerAppointmentService {
 
     List<YcmCustomerAppointment> getAllShopCustomerServices(String shopName);
 
-    void updateYcmCustomerService (YcmCustomerAppointment ycmCustomerAppointment);
+    void updateYcmCustomerService(YcmCustomerAppointment ycmCustomerAppointment);
 
     YcmCustomerAppointment scheduleNewAppointment(String nick, YcmCustomerNewAppointmentDTO ycmCustomerNewAppointmentDTO);
 

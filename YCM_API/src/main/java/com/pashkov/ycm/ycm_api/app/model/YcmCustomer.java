@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author - Roman Pashkov
  */
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "ycmcustomer")
 public class YcmCustomer extends YcmUser implements Serializable {
@@ -24,7 +24,7 @@ public class YcmCustomer extends YcmUser implements Serializable {
         return "YcmCustomer{" +
                 "name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
-                "id='" + this.getId() + '\''+
+                "id='" + this.getId() + '\'' +
                 '}';
     }
 }

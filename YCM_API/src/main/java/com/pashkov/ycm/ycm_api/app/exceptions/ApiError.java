@@ -22,6 +22,7 @@ public class ApiError {
         this.message = message;
         this.errors = errors;
     }
+
     public ApiError(int status, String message, String... error) {
         super();
         this.status = status;

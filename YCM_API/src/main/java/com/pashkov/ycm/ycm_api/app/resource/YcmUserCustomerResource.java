@@ -1,10 +1,10 @@
 package com.pashkov.ycm.ycm_api.app.resource;
 
 import com.pashkov.ycm.ycm_api.app.model.To.YcmCustomerNewAppointmentDTO;
+import com.pashkov.ycm.ycm_api.app.model.*;
 import com.pashkov.ycm.ycm_api.app.service.YcmAddressService;
 import com.pashkov.ycm.ycm_api.app.service.YcmCustomerAppointmentService;
 import com.pashkov.ycm.ycm_api.app.service.YcmUserCustomerService;
-import com.pashkov.ycm.ycm_api.app.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;

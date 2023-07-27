@@ -11,7 +11,7 @@ import java.util.Objects;
  * Roman Pashkov created on 10.07.2022 inside the package - com.pashkov.ycm.ycm_api.YCM_API.app.entity
  */
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "ycmshopproduct")
 public class YcmShopProductEntity extends YcmService implements Serializable {

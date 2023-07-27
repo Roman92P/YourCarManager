@@ -3,7 +3,6 @@ package com.pashkov.ycm.ycm_api.app.resource;
 import com.pashkov.ycm.ycm_api.app.model.YcmCustomerAppointment;
 import com.pashkov.ycm.ycm_api.app.model.YcmCustomerAppointmentModel;
 import com.pashkov.ycm.ycm_api.app.model.YcmCustomerServiceRepresentationModelAssembler;
-import com.pashkov.ycm.ycm_api.app.model.YcmShop;
 import com.pashkov.ycm.ycm_api.app.service.YcmCustomerAppointmentService;
 import com.pashkov.ycm.ycm_api.app.service.YcmShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,7 @@ public class ShopCalendarResource {
     @GetMapping(path = "/{shopName}/calendar/currentMonth", produces = "application/json")
     @ResponseBody
     public ResponseEntity<List<YcmCustomerAppointmentModel>> getCurrentMonthShopCalendar(@PathVariable String shopName) {
-        List<YcmCustomerAppointmentModel> shopsAppointmentsForCurrentMonth  = ycmCustomerAppointmentService.getShopAppointmentsForCurrentMonth(shopName).stream()
+        List<YcmCustomerAppointmentModel> shopsAppointmentsForCurrentMonth = ycmCustomerAppointmentService.getShopAppointmentsForCurrentMonth(shopName).stream()
                 .map(ycmCustomerServiceRepresentationModelAssembler::toModel)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(shopsAppointmentsForCurrentMonth);
@@ -60,7 +59,7 @@ public class ShopCalendarResource {
     //To do: probably no need
     @PostMapping(path = "/{shopName}/calendar", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<Object> addNewUserServiceAppointmentToCalendar (@RequestBody YcmCustomerAppointment ycmCustomerAppointment) {
+    public ResponseEntity<Object> addNewUserServiceAppointmentToCalendar(@RequestBody YcmCustomerAppointment ycmCustomerAppointment) {
         return null;
     }
 

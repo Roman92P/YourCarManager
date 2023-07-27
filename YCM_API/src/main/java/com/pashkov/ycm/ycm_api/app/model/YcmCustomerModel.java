@@ -41,5 +41,4 @@ public class YcmCustomerModel extends RepresentationModel<YcmCustomerModel> {
     private Role role;
 
 
-
 }

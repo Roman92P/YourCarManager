@@ -13,7 +13,7 @@ import java.util.Optional;
  */
 
 @Service
-public class YcmUserCustomerImpl implements YcmUserCustomerService{
+public class YcmUserCustomerImpl implements YcmUserCustomerService {
 
     @Autowired
     private YcmUserCustomerRepository ycmUserCustomerRepository;

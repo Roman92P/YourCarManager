@@ -3,8 +3,8 @@ package com.pashkov.ycm.ycm_api.app.service;
 import com.pashkov.ycm.ycm_api.app.model.YcmCustomerAppointment;
 import com.pashkov.ycm.ycm_api.app.model.YcmShop;
 import com.pashkov.ycm.ycm_api.app.model.YcmShopProductEntity;
-import com.pashkov.ycm.ycm_api.app.repository.YcmShopRepository;
 import com.pashkov.ycm.ycm_api.app.repository.YcmShopProductRepository;
+import com.pashkov.ycm.ycm_api.app.repository.YcmShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
