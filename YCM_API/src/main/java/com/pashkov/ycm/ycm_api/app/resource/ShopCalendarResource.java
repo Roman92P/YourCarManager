@@ -56,6 +56,12 @@ public class ShopCalendarResource {
         return ResponseEntity.ok(mappedResult);
     }
 
+    @GetMapping(path = "/{shopName}/calendar/{appointmentTimestampStart}/{appointmentTimestampEnd}")
+    @ResponseBody
+    public ResponseEntity<List<YcmCustomerAppointmentModel>> getAllAppointmentsBetweenDay() {
+        return null;
+    }
+
     //To do: probably no need
     @PostMapping(path = "/{shopName}/calendar", consumes = "application/json", produces = "application/json")
     @ResponseBody

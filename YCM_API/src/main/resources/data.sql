@@ -23,12 +23,16 @@ INSERT INTO YCMWORKER_SERVICETYPE (worker_id, worker_specialization) VALUES (1, 
 INSERT INTO YCMCUSTOMERAPPOINTMENT(service_type, service_description,service_price, currency, service_appointment_day, ycmcustomer_id, service_hour, shop_id, short_service_name, worker_id, start_timestamp, end_timestamp) VALUES (9, 'Change motor oil with oil filter','500', 0, '30-Dec-2023',1, '16:00', 1, 'Motor oil', 1, '2023-12-30 16:00:00.0', '2023-12-30 16:30:00.0');
 INSERT INTO YCMCUSTOMERAPPOINTMENT(service_type, service_description,service_price, currency, service_appointment_day, ycmcustomer_id, service_hour, shop_id, short_service_name, worker_id, start_timestamp, end_timestamp) VALUES (9, 'Replacement of spark plug candles','300', 0,'30-Dec-2023',2, '16:30', 1,  'Engine candles', 1, '2023-12-30 16:30:00.0', '2023-12-30 17:00:00.0');
 INSERT INTO YCMCUSTOMERAPPOINTMENT(service_type, service_description,service_price, currency, service_appointment_day, ycmcustomer_id, service_hour, shop_id, short_service_name, worker_id, start_timestamp, end_timestamp) VALUES (9, 'Engine cleaning','800', 0,'30-Dec-2023',1, '17:00', 1, 'Engine cleaning', 1, '2023-12-30 17:00:00.0', '2023-12-30 18:00:00.0');
+INSERT INTO YCMCUSTOMERAPPOINTMENT(service_type, service_description,service_price, currency, service_appointment_day, ycmcustomer_id, service_hour, shop_id, short_service_name, worker_id, start_timestamp, end_timestamp) VALUES (9, 'Replacement of spark plug candles','300', 0,'24-Dec-2023',2, '16:30', 1,  'Engine candles', 1, '2023-12-24 16:30:00.0', '2023-12-24 17:00:00.0');
+INSERT INTO YCMCUSTOMERAPPOINTMENT(service_type, service_description,service_price, currency, service_appointment_day, ycmcustomer_id, service_hour, shop_id, short_service_name, worker_id, start_timestamp, end_timestamp) VALUES (9, 'Engine cleaning','800', 0,'28-Dec-2023',1, '17:00', 1, 'Engine cleaning', 1, '2023-12-28 17:00:00.0', '2023-12-28 18:00:00.0');
 INSERT INTO SHOP_SERVICES (ycm_shop_id, service_id) VALUES (1,1);
 INSERT INTO SHOP_SERVICES (ycm_shop_id, service_id) VALUES (1,2);
 INSERT INTO SHOP_SERVICES (ycm_shop_id, service_id) VALUES (1,3);
 INSERT INTO YCM_WORKER_JOBS (ycm_shop_worker_id, ycm_customer_appointment_id) VALUES (1,1);
 INSERT INTO YCM_WORKER_JOBS (ycm_shop_worker_id, ycm_customer_appointment_id) VALUES (1,2);
 INSERT INTO YCM_WORKER_JOBS (ycm_shop_worker_id, ycm_customer_appointment_id) VALUES (1,3);
+INSERT INTO YCM_WORKER_JOBS (ycm_shop_worker_id, ycm_customer_appointment_id) VALUES (1,4);
+INSERT INTO YCM_WORKER_JOBS (ycm_shop_worker_id, ycm_customer_appointment_id) VALUES (1,5);
 
 
 
