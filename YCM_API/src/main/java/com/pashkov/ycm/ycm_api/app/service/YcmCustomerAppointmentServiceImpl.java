@@ -13,11 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.*;
 
 /**
@@ -190,5 +188,17 @@ public class YcmCustomerAppointmentServiceImpl implements YcmCustomerAppointment
     @Override
     public List<YcmCustomerAppointment> getAllShopAppointmentsInSpecificDay(String shopName, String appointmentDay) {
         return ycmCustomerAppointmentRepository.findAllByServiceAppointmentDay(shopName, appointmentDay);
+    }
+
+    @Override
+    public List<YcmCustomerAppointment> getBetweenDays(String shopName ,String from, String until) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MMM-yyyy", Locale.ENGLISH);
+        LocalDate localDateS = LocalDate.parse(from, formatter);
+        LocalDateTime localDateTimeS = localDateS.atStartOfDay();
+        Instant start = localDateTimeS.toInstant(ZoneOffset.UTC);
+        LocalDate localDateE = LocalDate.parse(until, formatter);
+        LocalDateTime localDateTimeE = localDateE.atStartOfDay();
+        Instant end = localDateTimeE.toInstant(ZoneOffset.UTC);
+        return ycmCustomerAppointmentRepository.findAllCustomerAppointmentsDuringPeriod(shopName, start, end);
     }
 }

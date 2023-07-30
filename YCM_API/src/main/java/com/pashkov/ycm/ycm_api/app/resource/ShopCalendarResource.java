@@ -56,10 +56,15 @@ public class ShopCalendarResource {
         return ResponseEntity.ok(mappedResult);
     }
 
-    @GetMapping(path = "/{shopName}/calendar/{appointmentTimestampStart}/{appointmentTimestampEnd}")
+    @GetMapping(path = "/{shopName}/calendar/{from}/{until}")
     @ResponseBody
-    public ResponseEntity<List<YcmCustomerAppointmentModel>> getAllAppointmentsBetweenDay() {
-        return null;
+    public ResponseEntity<List<YcmCustomerAppointmentModel>> getAllAppointmentsBetweenDay(@PathVariable String shopName,
+                                                                                          @PathVariable String from,
+                                                                                          @PathVariable String until) {
+        List<YcmCustomerAppointment> result = ycmCustomerAppointmentService.getBetweenDays(shopName, from, until);
+        return ResponseEntity.ok(result.stream()
+                .map(ycmCustomerServiceRepresentationModelAssembler::toModel)
+                .collect(Collectors.toList()));
     }
 
     //To do: probably no need

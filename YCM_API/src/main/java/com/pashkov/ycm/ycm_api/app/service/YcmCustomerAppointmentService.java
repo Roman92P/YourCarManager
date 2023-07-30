@@ -31,4 +31,6 @@ public interface YcmCustomerAppointmentService {
     List<YcmCustomerAppointment> getShopAppointmentsForCurrentMonth(String shopName);
 
     List<YcmCustomerAppointment> getAllShopAppointmentsInSpecificDay(String shopName, String appointmentTimestamp);
+
+    List<YcmCustomerAppointment> getBetweenDays(String shopName, String from, String until);
 }

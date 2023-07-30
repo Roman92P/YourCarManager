@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,6 @@ public interface YcmCustomerAppointmentRepository extends CrudRepository<YcmCust
     @Query("select s from YcmCustomerAppointment s where s.ycmShop.shopName = ?1 and s.serviceAppointmentDay = ?2")
     List<YcmCustomerAppointment> findAllByServiceAppointmentDay(String shopName, String day);
 
-    @Query("select s from YcmCustomerAppointment s where s.ycmShop.shopName = ?1 and s.serviceAppointmentDay = ?2")
-    List<YcmCustomerAppointment> findAllCustomerAppointmentsDuringPeriod(String shopName, String start, String end);
+    @Query("select s from YcmCustomerAppointment s where s.ycmShop.shopName = ?1 and s.startTimestamp BETWEEN ?2 AND ?3")
+    List<YcmCustomerAppointment> findAllCustomerAppointmentsDuringPeriod(String shopName, Instant start, Instant end);
 }
