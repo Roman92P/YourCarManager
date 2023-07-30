@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -133,10 +136,11 @@ public class YcmCustomerAppointmentServiceImpl implements YcmCustomerAppointment
         return ycmCustomerNewService;
     }
 
-    private Set<YcmShopWorker> filterWorkersNotBusy(Set<YcmShopWorker> allShopWorkersWithNeededSpecialization, String startTimestamp, String endTimestamp) {
-
-        LocalDateTime startTimeOfNewWork = LocalDateTime.parse(startTimestamp, DateTimeFormatter.ofPattern(Const.DATE_TIME_PARSE_FORMAT));
-        LocalDateTime endTimeOfNewWork = LocalDateTime.parse(endTimestamp, DateTimeFormatter.ofPattern(Const.DATE_TIME_PARSE_FORMAT));
+    private Set<YcmShopWorker> filterWorkersNotBusy(Set<YcmShopWorker> allShopWorkersWithNeededSpecialization, Instant startTimestamp, Instant endTimestamp) {
+        OffsetDateTime offsetDateTimeStart = startTimestamp.atOffset(ZoneOffset.UTC);
+        OffsetDateTime offsetDateTimeEnd = endTimestamp.atOffset(ZoneOffset.UTC);
+        LocalDateTime startTimeOfNewWork = offsetDateTimeStart.toLocalDateTime();
+        LocalDateTime endTimeOfNewWork = offsetDateTimeEnd.toLocalDateTime();
         Set<YcmShopWorker> filteredWorkers = new HashSet<>();
         for (YcmShopWorker ycmShopWorker : allShopWorkersWithNeededSpecialization) {
             if (workerIsAvailable(startTimeOfNewWork, endTimeOfNewWork, ycmShopWorker.getYcmWorkerOccupiedHours())) {
@@ -149,8 +153,12 @@ public class YcmCustomerAppointmentServiceImpl implements YcmCustomerAppointment
     private boolean workerIsAvailable(LocalDateTime startTimeOfNewWork, LocalDateTime endTimeOfNewWork, List<YcmWorkerJobs> ycmWorkerOccupiedHours) {
         List<LocalDateTime> allWorkTiming = new ArrayList<>();
         for (YcmWorkerJobs work : ycmWorkerOccupiedHours) {
-            allWorkTiming.add(LocalDateTime.parse(work.getYcmCustomerAppointment().getStartTimestamp(), DateTimeFormatter.ofPattern(Const.DATE_TIME_PARSE_FORMAT)));
-            allWorkTiming.add(LocalDateTime.parse(work.getYcmCustomerAppointment().getEndTimestamp(), DateTimeFormatter.ofPattern(Const.DATE_TIME_PARSE_FORMAT)));
+            Instant startTimestamp = work.getYcmCustomerAppointment().getStartTimestamp();
+            Instant endTimestamp = work.getYcmCustomerAppointment().getEndTimestamp();
+            OffsetDateTime offsetDateTimeStart = startTimestamp.atOffset(ZoneOffset.UTC);
+            OffsetDateTime offsetDateTimeEnd = endTimestamp.atOffset(ZoneOffset.UTC);
+            allWorkTiming.add(offsetDateTimeStart.toLocalDateTime());
+            allWorkTiming.add(offsetDateTimeEnd.toLocalDateTime());
         }
         for (int i = 0; i < allWorkTiming.size(); i = i + 2) {
             LocalDateTime existingWorkStart = allWorkTiming.get(i);

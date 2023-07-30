@@ -32,4 +32,7 @@ public interface YcmCustomerAppointmentRepository extends CrudRepository<YcmCust
 
     @Query("select s from YcmCustomerAppointment s where s.ycmShop.shopName = ?1 and s.serviceAppointmentDay = ?2")
     List<YcmCustomerAppointment> findAllByServiceAppointmentDay(String shopName, String day);
+
+    @Query("select s from YcmCustomerAppointment s where s.ycmShop.shopName = ?1 and s.serviceAppointmentDay = ?2")
+    List<YcmCustomerAppointment> findAllCustomerAppointmentsDuringPeriod(String shopName, String start, String end);
 }

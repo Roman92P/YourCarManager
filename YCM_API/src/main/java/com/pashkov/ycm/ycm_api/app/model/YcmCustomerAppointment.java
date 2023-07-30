@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -19,8 +20,8 @@ public class YcmCustomerAppointment extends YcmService implements Serializable {
     private long id;
     private String serviceAppointmentDay;
     private String serviceHour;
-    private String startTimestamp;
-    private String endTimestamp;
+    private Instant startTimestamp;
+    private Instant endTimestamp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ycmcustomer_id")

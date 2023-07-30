@@ -12,9 +12,12 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -46,7 +49,7 @@ public class CustomerAppointmentToYcmCustomerServiceMapper {
         YcmShopProductEntity ycmShopProductEntity = serviceOptional.get();
         String timingHours = ycmShopProductEntity.getTimingHours();
         String serviceAppointmentDay = ycmCustomerNewAppointmentDTO.getServiceAppointmentDay();
-        String serviceAppointmentHour = ycmCustomerNewAppointmentDTO.getServiceAppointmentHour();
+        String serviceAppointmentHour = ycmCustomerNewAppointmentDTO.getServiceAppointmentHour()+":00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy", Locale.ENGLISH);
         LocalDate localDate = LocalDate.parse(serviceAppointmentDay, formatter);
         LocalDateTime localDateTime = LocalDateTime.parse(localDate.toString() + "T" + serviceAppointmentHour);
@@ -61,8 +64,8 @@ public class CustomerAppointmentToYcmCustomerServiceMapper {
         ycmCustomerAppointment.setServiceHour(serviceAppointmentHour);
         ycmCustomerAppointment.setServiceAppointmentDay(serviceAppointmentDay);
         ycmCustomerAppointment.setServiceDescription(ycmShopProductEntity.getServiceDescription());
-        ycmCustomerAppointment.setStartTimestamp(String.valueOf(startTimestamp));
-        ycmCustomerAppointment.setEndTimestamp(String.valueOf(endTimestamp));
+        ycmCustomerAppointment.setStartTimestamp(localDateTime.toInstant(ZoneOffset.UTC));
+        ycmCustomerAppointment.setEndTimestamp(localDateTime1.toInstant(ZoneOffset.UTC));
         ycmCustomerAppointment.setCurrency(ycmShopProductEntity.getCurrency());
         ycmCustomerAppointment.setServicePrice(ycmShopProductEntity.getServicePrice());
         ycmCustomerAppointment.setServiceType(ycmShopProductEntity.getServiceType());
