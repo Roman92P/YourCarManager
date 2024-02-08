@@ -7,17 +7,15 @@ import com.pashkov.ycm.ycm_api.app.model.YcmShop;
 import com.pashkov.ycm.ycm_api.app.model.YcmShopProductEntity;
 import com.pashkov.ycm.ycm_api.app.service.YcmShopProductService;
 import com.pashkov.ycm.ycm_api.app.service.YcmShopService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 import java.util.Optional;
 

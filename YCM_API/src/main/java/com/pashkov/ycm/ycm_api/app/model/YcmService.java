@@ -2,7 +2,7 @@ package com.pashkov.ycm.ycm_api.app.model;
 
 import lombok.Data;
 
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 /**
