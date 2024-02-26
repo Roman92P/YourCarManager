@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author - Roman Pashkov
  */
 @Data
-@Table(name = "ycmuser")
+//@Table(name = "ycmuser")
 @MappedSuperclass
 public abstract class YcmUser implements Serializable {
     @Id
